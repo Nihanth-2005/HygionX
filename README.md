@@ -1,128 +1,223 @@
-# HygionX MediAI Triage System
+# HygionX
 
-**Tagline: Bridging Artificial Intelligence and Explainable Medicine**
-
-An AI-powered medical symptom assessment assistant that helps evaluate symptoms and provide appropriate medical guidance.
+HygionX is a Flask-based AI medical triage assistant with user authentication, symptom analysis, follow-up questioning, session history, and an admin analytics dashboard.
 
 ## Features
 
-- **Symptom Extraction**: Automatically identifies symptoms from user messages
-- **Session Management**: Maintains symptom history across the conversation
-- **Follow-up Questions**: Asks clarifying questions when more information is needed
-- **Severity Scoring**: Calculates risk level from 1-10 based on all symptoms
-- **Emergency Detection**: Immediate emergency classification for critical symptoms
-- **Condition Analysis**: Suggests possible medical conditions with probability scores
-- **Safety-First Approach**: Always includes safety disclaimers and recommends professional medical care
+- User registration and login with Firebase
+- AI-assisted symptom extraction and triage guidance
+- Follow-up questioning when symptom data is incomplete
+- Session history stored in MySQL
+- Health timeline and profile pages
+- Admin login using `.env` credentials
+- Admin dashboard with analytics cards and multiple charts
 
-## How It Works
+## Tech Stack
 
-### Session Symptom Rule
-- Maintains a list called `SESSION_SYMPTOMS` across the entire conversation
-- Considers ALL symptoms when generating final assessment
-- Never ignores or removes symptoms unless explicitly resolved by user
+- Python
+- Flask
+- Flask-SQLAlchemy
+- MySQL
+- Firebase Authentication
+- SciSpaCy
+- Sentence Transformers
+- FAISS
+- Tailwind CSS
 
-### Follow-up Rule
-- Asks follow-up questions when follow-up_count < 3 and symptom information is insufficient
-- Questions are simple, preferably yes/no format
-- Helps detect additional symptoms
+## Project Structure
 
-### Final Triage Rule
-- Generates final assessment when follow-up_count ≥ 3 OR sufficient symptoms are available
-- Uses the FULL SESSION_SYMPTOMS list for comprehensive analysis
+- `app.py` - main Flask application
+- `models.py` - SQLAlchemy models and migrations
+- `templates/` - HTML templates
+- `static/` - frontend assets
+- `Datasets/` - CSV datasets used by the ML pipeline
+- `Models/` - trained model artifacts
+- `llm/` - LLM helper code
+- `requirements.txt` - Python dependencies
+- `.env` - local environment configuration
 
-### Severity Scoring
-- **1-3**: Low Risk
-- **4-6**: Moderate Risk  
-- **7-8**: High Risk
-- **9-10**: Emergency
+## Prerequisites
 
-### Emergency Override
-Immediate emergency classification if symptoms include:
-- Severe chest pain
-- Breathing difficulty
-- Stroke symptoms
-- Severe bleeding
-- Loss of consciousness
+Before running the project, make sure you have:
 
-## Files
+- Python 3.10 or newer
+- `pip`
+- MySQL installed and running
+- A Firebase project for authentication
+- A Firebase service account JSON file
+- A Google reCAPTCHA setup for your app
 
-- `hygionx_medical_triage.py` - Main triage system implementation
-- `demo_triage.py` - Interactive demo for testing the system
-- `README.md` - This documentation file
+## Setup
 
-## Usage
+Follow these steps in order.
 
-### Running the Interactive Demo
+### 1. Open the project folder
 
-```bash
-python demo_triage.py
+```powershell
+cd "c:\Users\chips\Desktop\Final HygionX - Tested OK"
 ```
 
-### Using the System Programmatically
+### 2. Create a virtual environment
 
-```python
-from hygionx_medical_triage import HygionXMediAITriage
-
-# Initialize the system
-triage = HygionXMediAITriage()
-
-# Process user messages
-response = triage.process_message("I have a headache and feel dizzy")
-
-# Check if follow-up is needed
-if response['status'] == 'follow_up_needed':
-    print(triage.get_follow_up_question())
-else:
-    assessment = response['final_assessment']
-    print(assessment)
+```powershell
+python -m venv venv
 ```
 
-## Example Conversation
+### 3. Activate the virtual environment
 
-```
-User: I have a headache and feel dizzy
-AI: I detected these symptoms: headache, dizziness
-Total symptoms so far: headache, dizziness
-AI: Do you also have fever, nausea, or dizziness?
-
-User: Yes, I also have some nausea
-AI: I detected these symptoms: nausea
-Total symptoms so far: headache, dizziness, nausea
-
-[Final Assessment Generated]
+```powershell
+venv\Scripts\activate
 ```
 
-## Output Format
+### 4. Install the requirements
 
-The final assessment includes:
+```powershell
+pip install -r requirements.txt
+```
 
-- **Assessment**: Explanation of possible medical concerns
-- **Severity Score**: Score from 1-10 based on combined symptom severity
-- **Urgency Level**: Low Risk, Moderate Risk, High Risk, or Emergency
-- **Recommended Action**: Clear medical guidance appropriate to urgency level
-- **Possible Conditions**: Three possible conditions with probability percentages
-- **Safety Notice**: Disclaimer about AI guidance vs professional medical diagnosis
+### 5. Configure the environment variables
+
+Create or update `.env` in the project root.
+
+Required values include:
+
+```env
+DATABASE_URL=mysql+pymysql://USERNAME:PASSWORD@localhost/hygionx
+
+FIREBASE_API_KEY=your-firebase-api-key
+FIREBASE_AUTH_DOMAIN=your-project.firebaseapp.com
+FIREBASE_PROJECT_ID=your-project-id
+FIREBASE_STORAGE_BUCKET=your-project.appspot.com
+FIREBASE_MESSAGING_SENDER_ID=your-sender-id
+FIREBASE_APP_ID=your-app-id
+FIREBASE_MEASUREMENT_ID=your-measurement-id
+FIREBASE_CREDENTIALS_PATH=firebase-service-account.json
+
+RECAPTCHA_SECRET_KEY=your-recaptcha-secret
+
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=change-this-password
+
+SARVAM_API_KEY=your-sarvam-api-key
+SARVAM_API_URL=https://api.sarvam.ai/v1/chat/completions
+```
+
+Notes:
+
+- `firebase-service-account.json` is not included in this repository. You must generate and download it from your own Firebase project, then place it in the project root.
+- `RECAPTCHA_SECRET_KEY` is also not included in this repository. You must create your own reCAPTCHA configuration in Google reCAPTCHA and add your secret key to `.env`.
+- Change the admin password before using this project outside local testing.
+- Do not commit `.env` or service account files to GitHub.
+
+### 6. Create the database
+
+Create a MySQL database named `hygionx`, or update `DATABASE_URL` to match your existing database name.
+
+Example:
+
+```sql
+CREATE DATABASE hygionx;
+```
+
+Tables are created automatically when the Flask app starts.
+
+### 7. Run the application
+
+```powershell
+python app.py
+```
+
+Important first-run note:
+
+- The first setup may take a while because `pip install -r requirements.txt` includes heavy ML/NLP dependencies.
+- The first app startup may also be slower because the system loads NLP and embedding components and may download required model assets from Hugging Face.
+- Later runs are usually faster once dependencies and model files are already available locally.
+
+By default, the app runs on:
+
+```text
+http://127.0.0.1:5000
+```
+
+## How To Access The System
+
+After starting the app, open your browser and use these routes:
+
+### Main user flow
+
+1. Open `http://127.0.0.1:5000/`
+2. Click `Login` or `Register`
+3. Sign in with Firebase-based user credentials
+4. After login, you will be redirected to the chat system
+
+### Admin flow
+
+1. Open `http://127.0.0.1:5000/admin/login`
+2. Enter the admin username and password stored in `.env`
+3. After login, you will be redirected to the admin dashboard
+4. The dashboard shows user counts, session counts, severity trends, emergency trends, and other analytics
+
+## Main Routes
+
+- `/` - landing page
+- `/login` - user login
+- `/register` - user registration
+- `/chat` - main triage chat page
+- `/profile` - user profile
+- `/timeline` - health timeline
+- `/settings` - settings page
+- `/admin/login` - admin login
+- `/admin/dashboard` - admin analytics dashboard
+
+## API Highlights
+
+- `/api/login` - user login
+- `/api/register` - user registration
+- `/api/chat` - triage chat API
+- `/api/user/profile` - user profile API
+- `/api/admin/login` - admin login API
+- `/api/admin/analytics` - admin analytics API
+
+## Example Run Order
+
+If someone is running the project for the first time, this is the correct order:
+
+1. Clone or download the project
+2. Open the project folder in terminal
+3. Create virtual environment
+4. Activate virtual environment
+5. Run `pip install -r requirements.txt`
+6. Configure `.env`
+7. Download your own `firebase-service-account.json` from Firebase and place it in the root folder
+8. Create your own Google reCAPTCHA key and add the secret key to `.env`
+9. Make sure MySQL is running and the database exists
+10. Run `python app.py`
+11. Wait a little longer on the first run because some dependencies and model assets may need to finish loading or downloading
+12. Open the app in the browser
+13. Use `/login` for normal users or `/admin/login` for admin access
+
+## Notes About ML Dependencies
+
+This project includes a heavier ML stack for symptom extraction. Packages like `torch`, `spacy`, `scispacy`, and `faiss-cpu` may take time to install.
+
+On the first run, the app may also download model-related files required by the NLP pipeline and Hugging Face-based components, so startup can take longer than usual.
+
+If one of those packages is missing, the app may still start, but the advanced ML-assisted symptom extraction can fall back or become limited.
 
 ## Safety Notice
 
-⚠️ **IMPORTANT**: This AI provides guidance only and is not a substitute for professional medical diagnosis, treatment, or advice. Always consult with qualified healthcare professionals for medical concerns, especially in emergency situations.
+This system is for educational and project purposes. It does not replace licensed medical advice, diagnosis, or emergency care.
 
-## Technical Details
+In urgent situations, users should contact emergency services or qualified healthcare professionals immediately.
 
-- **Language**: Python 3.x
-- **Dependencies**: Standard library only (re, json, typing, datetime)
-- **Architecture**: Object-oriented design with clear separation of concerns
-- **Pattern Matching**: Uses regex patterns for symptom extraction
-- **State Management**: Maintains conversation state across multiple messages
+## GitHub Safety
 
-## Contributing
+Before pushing to GitHub, make sure you do not upload:
 
-When modifying the system:
-1. Maintain the emergency override rule as the highest priority
-2. Ensure all symptoms in SESSION_SYMPTOMS are considered in assessments
-3. Keep follow-up questions simple and focused
-4. Preserve the safety-first approach in all outputs
+- `.env`
+- `firebase-service-account.json`
+- any other secret or credential file
 
 ## License
 
-This system is designed for educational and research purposes. Medical AI systems should always be developed and deployed with appropriate clinical validation and regulatory compliance.
+This project is intended for educational, demo, and research-oriented use.
