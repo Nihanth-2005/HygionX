@@ -1,0 +1,102 @@
+disease,symptoms
+Common Cold,runny nose;sore throat;cough;nasal congestion;sneezing;fatigue
+Influenza,fever;cough;fatigue;headache;muscle pain;chills
+COVID-19,fever;cough;fatigue;shortness of breath;loss of smell;loss of taste
+Sinusitis,facial pain;nasal congestion;headache;runny nose
+Allergic Rhinitis,sneezing;runny nose;itching skin;nasal congestion
+Asthma,shortness of breath;wheezing;cough;chest tightness
+Bronchitis,cough;fatigue;shortness of breath;chest discomfort
+Pneumonia,fever;cough;shortness of breath;chest pain;fatigue
+Tuberculosis,cough;coughing blood;fever;night sweats;weight loss
+COPD,shortness of breath;cough;wheezing;fatigue
+Coronary Heart Disease,chest pain;shortness of breath;fatigue
+Heart Attack,chest pain;shortness of breath;nausea;sweating;fainting
+Heart Failure,shortness of breath;fatigue;leg swelling;rapid heartbeat
+Arrhythmia,palpitations;dizziness;fainting;irregular heartbeat
+Stroke,slurred speech;focal weakness;loss of sensation;confusion
+Hypertension,headache;dizziness;fatigue
+Hypotension,dizziness;fainting;blurred vision
+Migraine,headache;nausea;vomiting;sensitivity to light
+Tension Headache,headache;neck pain;fatigue
+Epilepsy,seizures;loss of consciousness;confusion
+Parkinson Disease,tremors;muscle stiffness;difficulty walking
+Alzheimers Disease,memory loss;confusion;difficulty concentrating
+Dementia,memory loss;confusion;difficulty concentrating
+Meningitis,fever;neck stiffness;headache;confusion
+Brain Tumor,headache;vomiting;seizures
+GERD,heartburn;regurgitation;chest pain
+Gastritis,abdominal pain;nausea;vomiting
+Peptic Ulcer,abdominal pain;burning abdominal pain;nausea
+Appendicitis,sharp abdominal pain;fever;nausea;vomiting
+Gallstones,abdominal pain;nausea;vomiting
+Pancreatitis,upper abdominal pain;nausea;vomiting;fever
+Hepatitis,jaundice;fatigue;abdominal pain
+Liver Cirrhosis,jaundice;abdominal swelling;fatigue
+Food Poisoning,nausea;vomiting;diarrhea;abdominal pain
+Irritable Bowel Syndrome,abdominal pain;diarrhea;constipation;bloating
+Crohns Disease,diarrhea;abdominal pain;weight loss
+Ulcerative Colitis,diarrhea;blood in stool;abdominal pain
+Diabetes,excessive thirst;frequent urination;fatigue;blurred vision
+Hypoglycemia,dizziness;sweating;confusion
+Hyperthyroidism,weight loss;rapid heartbeat;sweating
+Hypothyroidism,fatigue;weight gain;cold intolerance
+Obesity,weight gain;fatigue;shortness of breath
+Anemia,fatigue;weakness;pallor;shortness of breath
+Vitamin D Deficiency,bone pain;muscle weakness;fatigue
+Osteoporosis,bone pain;back pain
+Arthritis,joint pain;joint swelling;joint stiffness
+Rheumatoid Arthritis,joint pain;joint swelling;fatigue
+Osteoarthritis,joint pain;joint stiffness
+Gout,joint pain;joint swelling
+Back Strain,back pain;muscle stiffness
+Sciatica,back pain;leg pain;numbness
+Kidney Stones,flank pain;blood in urine;nausea
+Chronic Kidney Disease,fatigue;swelling;low urine output
+Urinary Tract Infection,painful urination;frequent urination;blood in urine
+Bladder Infection,painful urination;frequent urination;lower abdominal pain
+Prostatitis,pelvic pain;difficulty urinating
+Endometriosis,pelvic pain;painful menstruation
+Polycystic Ovary Syndrome,irregular menstruation;weight gain;infertility
+Menopause,hot flashes;insomnia;mood swings
+Depression,depression;fatigue;insomnia
+Anxiety Disorder,anxiety;restlessness;insomnia
+Panic Disorder,panic attacks;rapid heartbeat;sweating
+Bipolar Disorder,mood swings;insomnia;depression
+Schizophrenia,delusions;hallucinations;confusion
+Dermatitis,skin rash;itching skin;skin redness
+Psoriasis,skin rash;skin dryness;skin lesions
+Acne,acne;skin redness
+Cellulitis,skin swelling;skin infection;fever
+Ringworm,skin rash;itching skin
+Conjunctivitis,eye redness;eye discharge;eye irritation
+Glaucoma,eye pain;blurred vision
+Cataract,blurred vision;vision loss
+Otitis Media,ear pain;ear discharge;hearing loss
+Tonsillitis,sore throat;swollen tonsils;fever
+Laryngitis,hoarse voice;sore throat
+Sleep Apnea,snoring;daytime fatigue;sleep apnea episodes
+Insomnia,insomnia;fatigue
+Chronic Fatigue Syndrome,fatigue;muscle pain;headache
+Fibromyalgia,muscle pain;fatigue
+Sepsis,fever;rapid breathing;confusion
+Malaria,fever;chills;sweating
+Dengue,fever;headache;joint pain
+Typhoid,fever;abdominal pain;diarrhea
+HIV Infection,fever;fatigue;weight loss
+Heat Stroke,fever;confusion;loss of consciousness
+Hypothermia,feeling cold;confusion;slow heartbeat
+Motion Sickness,nausea;vomiting;dizziness
+Food Allergy,skin rash;swelling;allergic reaction
+Carpal Tunnel Syndrome,hand pain;hand numbness
+Tennis Elbow,elbow pain;arm weakness
+Frozen Shoulder,shoulder pain;shoulder stiffness
+Menstrual Cramps,painful menstruation;abdominal cramps
+Lung Cancer,cough;shortness of breath;chest pain;weight loss
+Breast Cancer,breast lump;breast pain
+Colon Cancer,blood in stool;abdominal pain;weight loss
+Stomach Cancer,abdominal pain;vomiting;weight loss
+Pancreatic Cancer,abdominal pain;weight loss;nausea
+Prostate Cancer,difficulty urinating;frequent urination
+Cervical Cancer,vaginal bleeding;pelvic pain
+Skin Cancer,skin lesion;skin growth
+Melanoma,skin mole change;skin lesion

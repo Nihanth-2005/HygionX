@@ -1,0 +1,102 @@
+disease,severity_weight
+Common Cold,1
+Influenza,3
+COVID-19,3
+Sinusitis,2
+Allergic Rhinitis,2
+Asthma,3
+Bronchitis,3
+Pneumonia,4
+Tuberculosis,4
+COPD,4
+Coronary Heart Disease,4
+Heart Attack,5
+Heart Failure,4
+Arrhythmia,4
+Stroke,5
+Hypertension,4
+Hypotension,3
+Migraine,3
+Tension Headache,1
+Epilepsy,4
+Parkinson Disease,4
+Alzheimers Disease,4
+Dementia,4
+Meningitis,4
+Brain Tumor,4
+GERD,3
+Gastritis,3
+Peptic Ulcer,3
+Appendicitis,4
+Gallstones,3
+Pancreatitis,4
+Hepatitis,4
+Liver Cirrhosis,4
+Food Poisoning,3
+Irritable Bowel Syndrome,3
+Crohns Disease,4
+Ulcerative Colitis,4
+Diabetes,4
+Hypoglycemia,3
+Hyperthyroidism,3
+Hypothyroidism,3
+Obesity,3
+Anemia,3
+Vitamin D Deficiency,2
+Osteoporosis,3
+Arthritis,3
+Rheumatoid Arthritis,3
+Osteoarthritis,3
+Gout,3
+Back Strain,2
+Sciatica,3
+Kidney Stones,3
+Chronic Kidney Disease,4
+Urinary Tract Infection,3
+Bladder Infection,3
+Prostatitis,3
+Endometriosis,3
+Polycystic Ovary Syndrome,3
+Menopause,3
+Depression,3
+Anxiety Disorder,3
+Panic Disorder,3
+Bipolar Disorder,5
+Schizophrenia,5
+Dermatitis,2
+Psoriasis,3
+Acne,1
+Cellulitis,4
+Ringworm,2
+Conjunctivitis,2
+Glaucoma,4
+Cataract,4
+Otitis Media,2
+Tonsillitis,3
+Laryngitis,2
+Sleep Apnea,3
+Insomnia,2
+Chronic Fatigue Syndrome,3
+Fibromyalgia,3
+Sepsis,5
+Malaria,4
+Dengue,4
+Typhoid,4
+HIV Infection,5
+Heat Stroke,4
+Hypothermia,4
+Motion Sickness,1
+Food Allergy,3
+Carpal Tunnel Syndrome,3
+Tennis Elbow,2
+Frozen Shoulder,3
+Menstrual Cramps,1
+Lung Cancer,5
+Breast Cancer,5
+Colon Cancer,5
+Stomach Cancer,5
+Pancreatic Cancer,5
+Prostate Cancer,5
+Cervical Cancer,5
+Skin Cancer,5
+Melanoma,5

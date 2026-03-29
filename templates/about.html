@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About – HygionX</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-stethoscope text-sky-600 text-2xl mr-2"></i>
+                        <span class="text-xl font-bold text-gray-900">HygionX</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="/" class="text-gray-700 hover:text-sky-600 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                    <a href="/chat" class="bg-sky-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-sky-700">
+                        <i class="fas fa-comments mr-1"></i> Chat
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <header class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">About HygionX</h1>
+            <p class="text-gray-600 max-w-2xl">
+                HygionX is an AI-assisted health companion that helps you understand your symptoms,
+                assess urgency, and decide when to seek care.
+            </p>
+        </header>
+
+        <section class="mb-10">
+            <h2 class="text-xl font-semibold text-gray-900 mb-3">What HygionX does</h2>
+            <p class="text-gray-700 mb-3">
+                The system analyses the symptoms you describe in natural language and provides a structured
+                health assessment. It estimates the urgency level, suggests recommended actions, and keeps
+                a timeline of your past assessments for continuity.
+            </p>
+            <ul class="list-disc list-inside text-gray-700 space-y-1">
+                <li>Understands free‑text symptom descriptions.</li>
+                <li>Highlights potential red‑flag symptoms.</li>
+                <li>Generates follow‑up questions when information is incomplete.</li>
+                <li>Stores sessions so you can review past conversations.</li>
+            </ul>
+        </section>
+
+        <section class="mb-10">
+            <h2 class="text-xl font-semibold text-gray-900 mb-3">How symptom analysis works</h2>
+            <p class="text-gray-700 mb-3">
+                HygionX combines rule‑based medical heuristics with machine‑learning models:
+            </p>
+            <ul class="list-disc list-inside text-gray-700 space-y-1">
+                <li>Named‑entity recognition to detect medical symptoms in your text.</li>
+                <li>Embedding models to match similar phrasing and recover missed symptoms.</li>
+                <li>Severity scoring based on clinically motivated symptom weights.</li>
+                <li>Red‑flag detection for potentially life‑threatening patterns.</li>
+            </ul>
+        </section>
+
+        <section class="mb-10">
+            <h2 class="text-xl font-semibold text-gray-900 mb-3">AI triage pipeline overview</h2>
+            <ol class="list-decimal list-inside text-gray-700 space-y-1">
+                <li>You describe how you feel in your own words.</li>
+                <li>The system extracts and normalises symptoms from your message (and prior messages in the session).</li>
+                <li>Red‑flag symptoms are checked first; if detected, you receive an emergency guidance message.</li>
+                <li>If information is incomplete, the LLM generates short follow‑up questions.</li>
+                <li>When enough information is available, the system scores severity, estimates risk, and recommends next steps.</li>
+            </ol>
+        </section>
+
+        <section class="bg-amber-50 border border-amber-200 rounded-lg p-4">
+            <h2 class="text-lg font-semibold text-amber-900 mb-2">Important safety notice</h2>
+            <p class="text-amber-900 text-sm">
+                HygionX provides guidance only and is <span class="font-semibold">not</span> a substitute for
+                professional medical diagnosis, treatment, or emergency services. Always seek immediate medical
+                attention if you believe you are experiencing a medical emergency.
+            </p>
+        </section>
+    </main>
+</body>
+</html>
+

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Register - HygionX Health Assistant</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- reCAPTCHA -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<style>
+
+/* spinner */
+.spinner{
+border:3px solid #f3f3f3;
+border-top:3px solid white;
+border-radius:50%;
+width:16px;
+height:16px;
+animation:spin 1s linear infinite;
+display:inline-block;
+margin-right:6px;
+}
+
+@keyframes spin{
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
+}
+
+</style>
+
+</head>
+
+
+<body class="bg-gray-100 flex flex-col min-h-screen">
+
+<!-- NAVBAR (Same as Login Page) -->
+<nav class="bg-white shadow-sm">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+<div class="flex justify-between h-16">
+
+<div class="flex items-center">
+<i class="fas fa-stethoscope text-sky-600 text-2xl mr-2"></i>
+<span class="text-xl font-bold text-gray-900">HygionX</span>
+</div>
+
+<div class="flex items-center space-x-4">
+
+<a href="/" class="text-gray-700 hover:text-sky-600 px-4 py-2 text-base font-semibold rounded-md hover:bg-gray-100 transition">
+Home
+</a>
+
+<a href="/login" class="bg-sky-600 text-white px-5 py-2 rounded-md text-sm hover:bg-sky-700 transition">
+Login
+</a>
+
+</div>
+
+</div>
+</div>
+</nav>
+
+
+<!-- HERO -->
+<main class="flex-grow bg-gradient-to-r from-teal-500 to-cyan-600 flex items-center justify-center py-20">
+
+<div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
+
+<div class="text-center mb-6">
+
+<div class="flex justify-center mb-2 text-blue-600 text-3xl">
+👤
+</div>
+
+<h2 class="text-xl font-bold text-gray-800">
+Create your account
+</h2>
+
+<p class="text-sm text-gray-500">
+Join HygionX Health Assistant
+</p>
+
+</div>
+
+
+<div id="errorBox" class="hidden bg-red-100 text-red-700 p-3 rounded text-sm mb-4"></div>
+
+
+<form id="registerForm" class="space-y-4">
+
+<!-- NAME -->
+<div>
+<label class="text-sm text-gray-600">Full name</label>
+<input id="name" type="text" required
+class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+placeholder="John Doe">
+</div>
+
+
+<!-- EMAIL -->
+<div>
+<label class="text-sm text-gray-600">Email address</label>
+<input id="email" type="email" required
+class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+placeholder="Email address">
+</div>
+
+
+<!-- PASSWORD -->
+<div>
+<label class="text-sm text-gray-600">Password</label>
+
+<div class="relative">
+
+<input id="password" type="password" required minlength="6"
+class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+placeholder="Password">
+
+<button type="button"
+onclick="togglePassword('password')"
+class="absolute right-2 top-2 text-xs text-gray-500">
+Show
+</button>
+
+</div>
+
+<div id="strengthText" class="text-xs mt-1"></div>
+
+</div>
+
+
+<!-- CONFIRM PASSWORD -->
+<div>
+<label class="text-sm text-gray-600">Confirm Password</label>
+
+<div class="relative">
+
+<input id="confirmPassword" type="password" required
+class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+placeholder="Confirm password">
+
+<button type="button"
+onclick="togglePassword('confirmPassword')"
+class="absolute right-2 top-2 text-xs text-gray-500">
+Show
+</button>
+
+</div>
+
+<div id="matchText" class="text-xs mt-1"></div>
+
+</div>
+
+
+<!-- AGE -->
+<div>
+<label class="text-sm text-gray-600">Age</label>
+<input id="age" type="number" required min="1"
+class="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+placeholder="25">
+</div>
+
+
+<!-- CAPTCHA -->
+<div class="flex justify-center">
+<div class="g-recaptcha" data-sitekey="6LdwBYwsAAAAAD5OkwkHMsiHh0M7OHb2fGAGhl9t"></div>
+</div>
+
+
+<!-- BUTTON -->
+<button id="submitBtn" type="submit"
+class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 text-sm font-medium">
+Register
+</button>
+
+
+<div class="text-center text-sm text-gray-500">
+Already have an account?
+<a href="/login" class="text-blue-600 hover:underline">
+Sign in
+</a>
+</div>
+
+</form>
+
+</div>
+
+</main>
+
+
+<!-- MINIMAL FOOTER (Same as Login Page) -->
+<footer class="bg-gray-900 text-gray-400 py-6 text-sm">
+
+<div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
+
+<p>© 2026 HygionX. All rights reserved.</p>
+
+<div class="flex space-x-6 mt-3 md:mt-0">
+<a href="./privacy.html" class="hover:text-white transition">Privacy</a>
+<a href="./terms.html" class="hover:text-white transition">Terms</a>
+<a href="./help.html" class="hover:text-white transition">Help</a>
+</div>
+
+</div>
+
+</footer>
+
+
+
+{% if firebase_config %}
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+<script>
+firebase.initializeApp({{ firebase_config | tojson }});
+</script>
+{% endif %}
+
+
+
+<script>
+
+const form = document.getElementById('registerForm');
+const errorBox = document.getElementById('errorBox');
+const submitBtn = document.getElementById('submitBtn');
+
+function showError(msg){
+errorBox.innerText = msg;
+errorBox.classList.remove("hidden");
+}
+
+function togglePassword(id){
+const input = document.getElementById(id);
+input.type = input.type === "password" ? "text" : "password";
+}
+
+/* PASSWORD STRENGTH */
+
+const passwordInput = document.getElementById("password");
+
+passwordInput.addEventListener("input",()=>{
+
+const val = passwordInput.value;
+const strength = document.getElementById("strengthText");
+
+if(val.length < 6){
+strength.innerHTML="Weak password";
+strength.className="text-xs text-red-500";
+}
+else if(val.match(/[A-Z]/) && val.match(/[0-9]/)){
+strength.innerHTML="Strong password";
+strength.className="text-xs text-green-600";
+}
+else{
+strength.innerHTML="Medium password";
+strength.className="text-xs text-yellow-500";
+}
+
+});
+
+/* PASSWORD MATCH */
+
+const confirmInput = document.getElementById("confirmPassword");
+
+confirmInput.addEventListener("input",()=>{
+
+const matchText = document.getElementById("matchText");
+
+if(confirmInput.value === passwordInput.value){
+matchText.innerHTML="Passwords match";
+matchText.className="text-xs text-green-600";
+}else{
+matchText.innerHTML="Passwords do not match";
+matchText.className="text-xs text-red-500";
+}
+
+});
+
+
+form.addEventListener('submit', async (e)=>{
+
+e.preventDefault();
+
+submitBtn.innerHTML='<span class="spinner"></span>Creating account...';
+submitBtn.disabled=true;
+
+const name = document.getElementById('name').value;
+const email = document.getElementById('email').value;
+const password = passwordInput.value;
+const confirmPassword = confirmInput.value;
+const age = document.getElementById('age').value;
+
+if(password !== confirmPassword){
+showError("Passwords do not match");
+submitBtn.innerHTML="Register";
+submitBtn.disabled=false;
+return;
+}
+
+const captcha = grecaptcha.getResponse();
+
+if(!captcha){
+showError("Please complete the reCAPTCHA");
+submitBtn.innerHTML="Register";
+submitBtn.disabled=false;
+return;
+}
+
+try{
+
+const cred = await firebase.auth().createUserWithEmailAndPassword(email, password);
+
+const idToken = await cred.user.getIdToken();
+
+const response = await fetch('/api/register',{
+method:'POST',
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({
+name,
+age,
+captcha,
+idToken
+})
+});
+
+const data = await response.json();
+
+if(data.success){
+window.location.href = data.redirect || '/chat';
+}else{
+showError(data.message || "Registration failed.");
+}
+
+}catch(err){
+console.error(err);
+showError("Registration failed.");
+submitBtn.innerHTML="Register";
+submitBtn.disabled=false;
+}
+
+});
+
+</script>
+
+</body>
+</html>

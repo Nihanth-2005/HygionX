@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - HygionX</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0d9488 50%, #0891b2 100%);
+        }
+        .sidebar-collapsed {
+            width: 4rem;
+        }
+        .sidebar-expanded {
+            width: 16rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 h-screen flex" data-firebase-enabled="{% if firebase_config %}true{% else %}false{% endif %}">
+    {% if firebase_config %}
+    <script type="application/json" id="firebase-config">
+        {{ firebase_config | tojson }}
+    </script>
+    {% endif %}
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar-expanded bg-white shadow-lg transition-all duration-300 flex flex-col">
+        <!-- Sidebar Header -->
+        <div class="p-4 border-b border-gray-200">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <i class="fas fa-stethoscope text-sky-600 text-xl mr-3"></i>
+                    <span class="sidebar-text font-bold text-gray-900">HygionX</span>
+                </div>
+                <button id="sidebarToggle" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Navigation Menu -->
+        <nav class="flex-1 p-4 space-y-2">
+            <a href="/chat" class="flex items-center p-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors">
+                <i class="fas fa-comments w-5"></i>
+                <span class="sidebar-text ml-3">Health Assistant</span>
+            </a>
+            <a href="/timeline" class="flex items-center p-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors">
+                <i class="fas fa-calendar-alt w-5"></i>
+                <span class="sidebar-text ml-3">Health Timeline</span>
+            </a>
+            <a href="/medical-encyclopedia" class="flex items-center p-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors">
+                <i class="fas fa-book-medical w-5"></i>
+                <span class="sidebar-text ml-3">Medical Encyclopedia</span>
+            </a>
+            <a href="/profile" class="flex items-center p-3 rounded-lg bg-sky-50 text-sky-600 hover:bg-sky-100 transition-colors">
+                <i class="fas fa-user w-5"></i>
+                <span class="sidebar-text ml-3">Profile</span>
+            </a>
+            <a href="/settings" class="flex items-center p-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors">
+                <i class="fas fa-cog w-5"></i>
+                <span class="sidebar-text ml-3">Settings</span>
+            </a>
+        </nav>
+
+        <!-- Bottom Actions -->
+        <div class="p-4 border-t border-gray-200 space-y-2">
+            <a href="/help" class="flex items-center p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors">
+                <i class="fas fa-question-circle w-5"></i>
+                <span class="sidebar-text ml-3">Help</span>
+            </a>
+            <a href="/about" class="flex items-center p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors">
+                <i class="fas fa-info-circle w-5"></i>
+                <span class="sidebar-text ml-3">About</span>
+            </a>
+            <button id="logoutBtn" class="flex items-center p-2 rounded-lg text-red-600 hover:bg-red-50 transition-colors w-full">
+                <i class="fas fa-sign-out-alt w-5"></i>
+                <span class="sidebar-text ml-3">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col">
+        <!-- Top Navigation Bar -->
+        <header class="bg-white shadow-sm border-b border-gray-200">
+            <div class="px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-900">Profile Settings</h1>
+                        <p class="text-sm text-gray-600">Manage your personal information and health context</p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <!-- User Profile -->
+                        <div class="flex items-center">
+                            <div class="h-8 w-8 rounded-full bg-sky-600 flex items-center justify-center">
+                                <span class="text-white text-sm font-medium">U</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+    <!-- Profile Content -->
+        <div class="flex-1 overflow-y-auto bg-gray-50 p-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Profile Card -->
+                    <div class="lg:col-span-1">
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <div class="text-center">
+                                <div class="h-20 w-20 rounded-full gradient-bg flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-user text-white text-2xl"></i>
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-900 mb-2">Your Profile</h3>
+                                <p class="text-gray-800 font-medium mb-2" id="profileName">Name not set</p>
+                                <p class="text-gray-600 text-sm mb-6">Manage your personal information and health preferences</p>
+                                
+                                <div class="space-y-3 text-left">
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-envelope text-gray-400 mr-3 w-4"></i>
+                                        <span class="text-gray-600" id="profileEmail">Loading...</span>
+                                    </div>
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-calendar text-gray-400 mr-3 w-4"></i>
+                                        <span class="text-gray-600" id="profileAge">Age not set</span>
+                                    </div>
+                                    <div class="flex items-center text-sm">
+                                        <i class="fas fa-venus-mars text-gray-400 mr-3 w-4"></i>
+                                        <span class="text-gray-600" id="profileGender">Prefer not to say</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Stats -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 mt-6">
+                            <h4 class="font-semibold text-gray-900 mb-4">Health Activity</h4>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-600">Total Assessments</span>
+                                    <span class="text-sm font-semibold text-sky-600">12</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-600">Last Assessment</span>
+                                    <span class="text-sm font-semibold text-sky-600">2 days ago</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm text-gray-600">Health Score</span>
+                                    <span class="text-sm font-semibold text-green-600">Good</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Forms Section -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <!-- Personal Information -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <div class="flex items-center mb-6">
+                                <i class="fas fa-user-edit text-sky-600 text-xl mr-3"></i>
+                                <h2 class="text-lg font-semibold text-gray-900">Personal Information</h2>
+                            </div>
+                            
+                            <form id="profileForm" class="space-y-4">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                                        <input type="text" id="name" name="name" 
+                                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent">
+                                    </div>
+                                    <div>
+                                        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                                        <input type="email" id="email" name="email" readonly
+                                               class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-600">
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label for="age" class="block text-sm font-medium text-gray-700 mb-2">Age</label>
+                                        <input type="number" id="age" name="age" min="1" max="120"
+                                               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent">
+                                    </div>
+                                    <div>
+                                        <label for="gender" class="block text-sm font-medium text-gray-700 mb-2">Gender</label>
+                                        <select id="gender" name="gender" 
+                                                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent">
+                                            <option value="prefer-not-to-say">Prefer not to say</option>
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                            <option value="other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <button type="submit" 
+                                        class="w-full bg-sky-600 text-white py-2 px-4 rounded-lg hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 transition-colors">
+                                    <i class="fas fa-save mr-2"></i> Save Personal Information
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Health Context -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <div class="flex items-center mb-6">
+                                <i class="fas fa-heartbeat text-red-600 text-xl mr-3"></i>
+                                <h2 class="text-lg font-semibold text-gray-900">Health Context</h2>
+                            </div>
+                            
+                            <form id="healthForm" class="space-y-4">
+                                <div>
+                                    <label for="conditions" class="block text-sm font-medium text-gray-700 mb-2">Pre-existing Conditions</label>
+                                    <textarea id="conditions" name="conditions" rows="3" 
+                                              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                                              placeholder="e.g., Diabetes, Hypertension, Asthma"></textarea>
+                                </div>
+                                <div>
+                                    <label for="allergies" class="block text-sm font-medium text-gray-700 mb-2">Allergies</label>
+                                    <textarea id="allergies" name="allergies" rows="3" 
+                                              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                                              placeholder="e.g., Penicillin, Peanuts, Pollen"></textarea>
+                                </div>
+                                <div>
+                                    <label for="medications" class="block text-sm font-medium text-gray-700 mb-2">Current Medications</label>
+                                    <textarea id="medications" name="medications" rows="3" 
+                                              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                                              placeholder="List current medications and dosages"></textarea>
+                                </div>
+                                
+                                <button type="submit" 
+                                        class="w-full bg-sky-600 text-white py-2 px-4 rounded-lg hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 transition-colors">
+                                    <i class="fas fa-save mr-2"></i> Save Health Context
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Data Management -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <div class="flex items-center mb-6">
+                                <i class="fas fa-shield-alt text-purple-600 text-xl mr-3"></i>
+                                <h2 class="text-lg font-semibold text-gray-900">Data Management & Privacy</h2>
+                            </div>
+                            
+                            <div class="space-y-4">
+                                <div class="border border-gray-200 rounded-lg p-4">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h4 class="font-medium text-gray-900">Export Your Data</h4>
+                                            <p class="text-sm text-gray-600">Download all your health data and assessment history</p>
+                                        </div>
+                                        <button id="exportBtn" 
+                                                class="bg-green-600 text-white py-2 px-4 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 transition-colors">
+                                            <i class="fas fa-download mr-2"></i> Export
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="border border-red-200 rounded-lg p-4">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <h4 class="font-medium text-red-900">Delete All Data</h4>
+                                            <p class="text-sm text-red-600">Permanently remove all your data from our system</p>
+                                        </div>
+                                        <button id="deleteBtn" 
+                                                class="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 transition-colors">
+                                            <i class="fas fa-trash mr-2"></i> Delete
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% if firebase_config %}
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+    <script>
+        const firebaseConfigElement = document.getElementById('firebase-config');
+        if (firebaseConfigElement && !firebase.apps.length) {
+            firebase.initializeApp(JSON.parse(firebaseConfigElement.textContent));
+        }
+    </script>
+    {% endif %}
+
+    <script>
+        let isSidebarExpanded = true;
+        const firebaseEnabled = document.body.getAttribute('data-firebase-enabled') === 'true';
+
+        async function getAuthHeaders() {
+            const headers = { 'Content-Type': 'application/json' };
+
+            if (!firebaseEnabled || typeof firebase === 'undefined' || !firebase.auth) {
+                return headers;
+            }
+
+            const user = firebase.auth().currentUser;
+            if (!user) {
+                throw new Error('User not authenticated');
+            }
+
+            const token = await user.getIdToken();
+            headers.Authorization = `Bearer ${token}`;
+            return headers;
+        }
+
+        // Sidebar Toggle
+        document.getElementById('sidebarToggle').addEventListener('click', () => {
+            const sidebar = document.getElementById('sidebar');
+            const sidebarTexts = document.querySelectorAll('.sidebar-text');
+            
+            isSidebarExpanded = !isSidebarExpanded;
+            
+            if (isSidebarExpanded) {
+                sidebar.classList.remove('sidebar-collapsed');
+                sidebar.classList.add('sidebar-expanded');
+                setTimeout(() => {
+                    sidebarTexts.forEach(text => text.style.display = 'block');
+                }, 150);
+            } else {
+                sidebar.classList.remove('sidebar-expanded');
+                sidebar.classList.add('sidebar-collapsed');
+                sidebarTexts.forEach(text => text.style.display = 'none');
+            }
+        });
+
+        // Load profile data
+        async function loadProfile() {
+            try {
+                const response = await fetch('/api/user/profile', {
+                    headers: await getAuthHeaders()
+                });
+                if (!response.ok) {
+                    throw new Error(`Profile request failed: ${response.status}`);
+                }
+                const data = await response.json();
+                
+                document.getElementById('name').value = data.name || '';
+                document.getElementById('email').value = data.email || '';
+                document.getElementById('age').value = data.age || '';
+                document.getElementById('gender').value = data.gender || 'prefer-not-to-say';
+                
+                // Update profile display
+                document.getElementById('profileName').textContent = data.name || 'Name not set';
+                document.getElementById('profileEmail').textContent = data.email || 'Not set';
+                document.getElementById('profileAge').textContent = data.age ? `${data.age} years` : 'Age not set';
+                document.getElementById('profileGender').textContent = formatGender(data.gender);
+                if (data.known_conditions) {
+                    document.getElementById('conditions').value = data.known_conditions;
+                }
+            } catch (error) {
+                console.error('Failed to load profile:', error);
+            }
+        }
+
+        // Load health context
+        async function loadHealthContext() {
+            try {
+                const response = await fetch('/api/user/health-context', {
+                    headers: await getAuthHeaders()
+                });
+                if (!response.ok) {
+                    throw new Error(`Health context request failed: ${response.status}`);
+                }
+                const data = await response.json();
+                
+                document.getElementById('conditions').value = data.conditions ? data.conditions.join(', ') : '';
+                document.getElementById('allergies').value = data.allergies ? data.allergies.join(', ') : '';
+                document.getElementById('medications').value = data.medications ? data.medications.join(', ') : '';
+            } catch (error) {
+                console.error('Failed to load health context:', error);
+            }
+        }
+
+        // Format gender for display
+        function formatGender(gender) {
+            const genderMap = {
+                'prefer-not-to-say': 'Prefer not to say',
+                'male': 'Male',
+                'female': 'Female',
+                'other': 'Other'
+            };
+            return genderMap[gender] || 'Prefer not to say';
+        }
+
+        // Show success message
+        function showSuccess(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed top-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center';
+            toast.innerHTML = `
+                <i class="fas fa-check-circle mr-2"></i>
+                <span>${message}</span>
+            `;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        // Show error message
+        function showError(message) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed top-4 right-4 bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center';
+            toast.innerHTML = `
+                <i class="fas fa-exclamation-circle mr-2"></i>
+                <span>${message}</span>
+            `;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        // Save profile
+        document.getElementById('profileForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            try {
+                const headers = await getAuthHeaders();
+                const response = await fetch('/api/user/profile', {
+                    method: 'PUT',
+                    headers,
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                if (result.success) {
+                    showSuccess('Profile updated successfully!');
+                    loadProfile(); // Refresh display
+                } else {
+                    showError('Failed to update profile');
+                }
+            } catch (error) {
+                showError('Failed to update profile');
+            }
+        });
+
+        // Save health context
+        document.getElementById('healthForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            // Convert comma-separated strings to arrays
+            data.conditions = data.conditions.split(',').map(s => s.trim()).filter(s => s);
+            data.allergies = data.allergies.split(',').map(s => s.trim()).filter(s => s);
+            data.medications = data.medications.split(',').map(s => s.trim()).filter(s => s);
+            
+            try {
+                const headers = await getAuthHeaders();
+                const response = await fetch('/api/user/health-context', {
+                    method: 'PUT',
+                    headers,
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                if (result.success) {
+                    showSuccess('Health context updated successfully!');
+                } else {
+                    showError('Failed to update health context');
+                }
+            } catch (error) {
+                showError('Failed to update health context');
+            }
+        });
+
+        // Export data
+        document.getElementById('exportBtn').addEventListener('click', async () => {
+            try {
+                const response = await fetch('/api/user/data/export');
+                const data = await response.json();
+                
+                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `mediAI_health_data_${new Date().toISOString().split('T')[0]}.json`;
+                a.click();
+                URL.revokeObjectURL(url);
+                
+                showSuccess('Data exported successfully!');
+            } catch (error) {
+                showError('Failed to export data');
+            }
+        });
+
+        // Delete data
+        document.getElementById('deleteBtn').addEventListener('click', async () => {
+            if (confirm('Are you sure you want to delete all your data? This action cannot be undone and will permanently remove:\n\n• Personal information\n• Health context\n• Assessment history\n• Chat records')) {
+                if (confirm('This is your final warning. All data will be permanently deleted. Continue?')) {
+                    try {
+                        await fetch('/api/user/data/delete', { method: 'DELETE' });
+                        showSuccess('All your data has been deleted successfully');
+                        setTimeout(() => {
+                            window.location.href = '/';
+                        }, 2000);
+                    } catch (error) {
+                        showError('Failed to delete data');
+                    }
+                }
+            }
+        });
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            try {
+                await fetch('/api/logout', { method: 'POST' });
+                window.location.href = '/';
+            } catch (error) {
+                window.location.href = '/';
+            }
+        });
+
+        // Initialize
+        async function initProfilePage() {
+            if (firebaseEnabled && typeof firebase !== 'undefined' && firebase.auth) {
+                await new Promise((resolve) => {
+                    const unsubscribe = firebase.auth().onAuthStateChanged(() => {
+                        unsubscribe();
+                        resolve();
+                    });
+                });
+            }
+
+            try {
+                await loadProfile();
+                await loadHealthContext();
+            } catch (error) {
+                console.error('Failed to initialize profile page:', error);
+            }
+        }
+
+        initProfilePage();
+    </script>
+</body>
+</html>

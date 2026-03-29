@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard - HygionX</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{
+--ink:#082f49;
+--teal:#0f766e;
+--sand:#fff7ed;
+--sky:#0ea5e9;
+--amber:#f59e0b;
+--rose:#e11d48;
+--slate:#0f172a;
+}
+body{
+background:
+radial-gradient(circle at top left, rgba(14,165,233,0.18), transparent 24%),
+radial-gradient(circle at top right, rgba(245,158,11,0.18), transparent 26%),
+linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+}
+.panel{
+background: rgba(255,255,255,0.88);
+backdrop-filter: blur(16px);
+box-shadow: 0 20px 55px rgba(15,23,42,0.08);
+}
+.chart-wrap{
+position: relative;
+height: 320px;
+}
+</style>
+</head>
+<body class="min-h-screen text-slate-900">
+{% set analytics_json = analytics | tojson %}
+<script id="analytics-data" type="application/json">{{ analytics_json }}</script>
+
+<nav class="border-b border-white/80 bg-white/80 backdrop-blur">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+        <div class="flex items-center">
+            <div>
+                <p class="text-xs font-bold uppercase tracking-[0.35em] text-slate-500">HygionX analytics</p>
+                <h1 class="text-2xl font-black">Admin Dashboard</h1>
+            </div>
+        </div>
+        <div class="flex items-center gap-3">
+            <button id="refreshBtn" class="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-cyan-500 hover:text-cyan-700">
+                <i class="fas fa-rotate mr-2"></i>Refresh
+            </button>
+            <button id="logoutBtn" class="rounded-full bg-slate-950 px-4 py-2 text-sm font-semibold text-white transition hover:bg-rose-700">
+                <i class="fas fa-right-from-bracket mr-2"></i>Logout
+            </button>
+        </div>
+    </div>
+</nav>
+
+<main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <section class="mb-8 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+        <article class="panel rounded-[1.75rem] border border-white p-5">
+            <p class="text-xs font-bold uppercase tracking-[0.24em] text-slate-500">Registered users</p>
+            <div id="kpiTotalUsers" class="mt-4 text-4xl font-black text-slate-950">0</div>
+            <p id="kpiRecentUsers" class="mt-2 text-sm text-emerald-700">0 new this week</p>
+        </article>
+        <article class="panel rounded-[1.75rem] border border-white p-5">
+            <p class="text-xs font-bold uppercase tracking-[0.24em] text-slate-500">Consultation sessions</p>
+            <div id="kpiTotalSessions" class="mt-4 text-4xl font-black text-slate-950">0</div>
+            <p id="kpiRecentSessions" class="mt-2 text-sm text-cyan-700">0 in the last 7 days</p>
+        </article>
+        <article class="panel rounded-[1.75rem] border border-white p-5">
+            <p class="text-xs font-bold uppercase tracking-[0.24em] text-slate-500">Messages stored</p>
+            <div id="kpiTotalMessages" class="mt-4 text-4xl font-black text-slate-950">0</div>
+            <p id="kpiAvgMessages" class="mt-2 text-sm text-slate-600">0 per session on average</p>
+        </article>
+        <article class="panel rounded-[1.75rem] border border-white p-5">
+            <p class="text-xs font-bold uppercase tracking-[0.24em] text-slate-500">Average severity</p>
+            <div id="kpiAvgSeverity" class="mt-4 text-4xl font-black text-amber-600">0</div>
+            <p id="kpiTotalResults" class="mt-2 text-sm text-slate-600">0 total triage results</p>
+        </article>
+        <article class="panel rounded-[1.75rem] border border-white p-5">
+            <p class="text-xs font-bold uppercase tracking-[0.24em] text-slate-500">Active users</p>
+            <div id="kpiActiveUsers" class="mt-4 text-4xl font-black text-teal-700">0</div>
+            <p id="kpiAvgConfidence" class="mt-2 text-sm text-slate-600">0% avg confidence</p>
+        </article>
+    </section>
+
+    <div id="statusBanner" class="mb-8 hidden rounded-[1.5rem] border px-5 py-4 text-sm"></div>
+
+    <section class="grid gap-6 xl:grid-cols-2">
+        <article class="panel rounded-[2rem] border border-white p-6">
+            <div class="mb-5 flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-black">User Growth Trend</h2>
+                    <p class="text-sm text-slate-500">Line chart of registrations over time</p>
+                </div>
+                <span class="rounded-full bg-cyan-100 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-cyan-700">Line</span>
+            </div>
+            <div class="chart-wrap"><canvas id="userGrowthChart"></canvas></div>
+        </article>
+
+        <article class="panel rounded-[2rem] border border-white p-6">
+            <div class="mb-5 flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-black">Risk Level Distribution</h2>
+                    <p class="text-sm text-slate-500">Doughnut view of low, moderate, and high risk cases</p>
+                </div>
+                <span class="rounded-full bg-amber-100 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-amber-700">Doughnut</span>
+            </div>
+            <div class="chart-wrap"><canvas id="riskDistributionChart"></canvas></div>
+        </article>
+
+        <article class="panel rounded-[2rem] border border-white p-6">
+            <div class="mb-5 flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-black">Top Symptoms</h2>
+                    <p class="text-sm text-slate-500">Bar chart of most commonly captured symptoms</p>
+                </div>
+                <span class="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-emerald-700">Bar</span>
+            </div>
+            <div class="chart-wrap"><canvas id="symptomFrequencyChart"></canvas></div>
+        </article>
+
+        <article class="panel rounded-[2rem] border border-white p-6">
+            <div class="mb-5 flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-black">Average Severity Over Time</h2>
+                    <p class="text-sm text-slate-500">Line chart of average triage severity across the last 14 days</p>
+                </div>
+                <span class="rounded-full bg-fuchsia-100 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-fuchsia-700">Line</span>
+            </div>
+            <div class="chart-wrap"><canvas id="avgSeverityOverTimeChart"></canvas></div>
+        </article>
+
+        <article class="panel rounded-[2rem] border border-white p-6 xl:col-span-2">
+            <div class="mb-5 flex items-center justify-between">
+                <div>
+                    <h2 class="text-xl font-black">Emergency Cases Over Time</h2>
+                    <p class="text-sm text-slate-500">Area chart of high-risk and emergency-like cases over the last 14 days</p>
+                </div>
+                <span class="rounded-full bg-rose-100 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-rose-700">Line</span>
+            </div>
+            <div class="chart-wrap"><canvas id="emergencyCasesOverTimeChart"></canvas></div>
+        </article>
+    </section>
+
+    <section class="panel mt-8 rounded-[2rem] border border-white p-6">
+        <div class="mb-5 flex items-center justify-between">
+            <div>
+                <h2 class="text-xl font-black">Recent Sessions</h2>
+                <p class="text-sm text-slate-500">Latest consultations saved in the platform</p>
+            </div>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="min-w-full text-left text-sm">
+                <thead>
+                    <tr class="border-b border-slate-200 text-slate-500">
+                        <th class="pb-3 pr-4 font-semibold">Session</th>
+                        <th class="pb-3 pr-4 font-semibold">User</th>
+                        <th class="pb-3 pr-4 font-semibold">Email</th>
+                        <th class="pb-3 font-semibold">Created</th>
+                    </tr>
+                </thead>
+                <tbody id="recentSessionsBody" class="divide-y divide-slate-100"></tbody>
+            </table>
+        </div>
+    </section>
+</main>
+
+<script>
+const chartInstances = {};
+const chartPalette = ['#0ea5e9', '#f59e0b', '#10b981', '#e11d48', '#8b5cf6', '#0f766e', '#334155', '#f97316'];
+const analyticsDataElement = document.getElementById('analytics-data');
+let analytics = analyticsDataElement ? JSON.parse(analyticsDataElement.textContent) : {};
+
+function showStatus(message, type) {
+    const banner = document.getElementById('statusBanner');
+    banner.textContent = message;
+    banner.className = 'mb-8 rounded-[1.5rem] border px-5 py-4 text-sm';
+    banner.classList.remove('hidden');
+    if (type === 'error') {
+        banner.classList.add('border-red-200', 'bg-red-50', 'text-red-700');
+    } else {
+        banner.classList.add('border-cyan-200', 'bg-cyan-50', 'text-cyan-800');
+    }
+}
+
+function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
+}
+
+function destroyCharts() {
+    Object.values(chartInstances).forEach(chart => chart.destroy());
+}
+
+function renderKPIs(kpis = {}) {
+    setText('kpiTotalUsers', kpis.total_users ?? 0);
+    setText('kpiRecentUsers', `${kpis.recent_users ?? 0} new this week`);
+    setText('kpiTotalSessions', kpis.total_sessions ?? 0);
+    setText('kpiRecentSessions', `${kpis.recent_sessions ?? 0} in the last 7 days`);
+    setText('kpiTotalMessages', kpis.total_messages ?? 0);
+    setText('kpiAvgMessages', `${kpis.avg_messages_per_session ?? 0} per session on average`);
+    setText('kpiAvgSeverity', kpis.avg_severity ?? 0);
+    setText('kpiTotalResults', `${kpis.total_triage_results ?? 0} total triage results`);
+    setText('kpiActiveUsers', kpis.active_users_30d ?? 0);
+    setText('kpiAvgConfidence', `${kpis.avg_confidence ?? 0}% avg confidence`);
+}
+
+function createChart(id, type, labels, values, extraOptions = {}) {
+    const context = document.getElementById(id)?.getContext('2d');
+    if (!context) return;
+
+    chartInstances[id] = new Chart(context, {
+        type,
+        data: {
+            labels,
+            datasets: [{
+                label: extraOptions.label || 'Value',
+                data: values,
+                borderColor: extraOptions.borderColor || chartPalette[0],
+                backgroundColor: extraOptions.backgroundColor || chartPalette.map(color => `${color}CC`),
+                borderWidth: extraOptions.borderWidth || 2,
+                tension: extraOptions.tension ?? 0.35,
+                fill: extraOptions.fill ?? false
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: extraOptions.showLegend ?? true,
+                    position: extraOptions.legendPosition || 'top'
+                }
+            },
+            scales: extraOptions.scales || {}
+        }
+    });
+}
+
+function renderCharts(charts = {}) {
+    destroyCharts();
+
+    createChart(
+        'userGrowthChart',
+        'line',
+        charts.user_growth?.labels || [],
+        charts.user_growth?.values || [],
+        {
+            label: 'New users',
+            borderColor: '#0ea5e9',
+            backgroundColor: 'rgba(14,165,233,0.18)',
+            fill: true,
+            showLegend: false
+        }
+    );
+
+    createChart(
+        'riskDistributionChart',
+        'doughnut',
+        charts.risk_distribution?.labels || [],
+        charts.risk_distribution?.values || [],
+        {
+            backgroundColor: ['#10b981', '#f59e0b', '#ef4444', '#94a3b8'],
+            borderWidth: 0
+        }
+    );
+
+    createChart(
+        'symptomFrequencyChart',
+        'bar',
+        charts.symptom_frequency?.labels || [],
+        charts.symptom_frequency?.values || [],
+        {
+            backgroundColor: ['#0f766e', '#0ea5e9', '#f59e0b', '#e11d48', '#8b5cf6', '#14b8a6'],
+            borderWidth: 0,
+            showLegend: false
+        }
+    );
+
+    createChart(
+        'avgSeverityOverTimeChart',
+        'line',
+        charts.avg_severity_over_time?.labels || [],
+        charts.avg_severity_over_time?.values || [],
+        {
+            label: 'Average severity',
+            borderColor: '#7c3aed',
+            backgroundColor: 'rgba(124,58,237,0.18)',
+            fill: true,
+            showLegend: false
+        }
+    );
+
+    createChart(
+        'emergencyCasesOverTimeChart',
+        'line',
+        charts.emergency_cases_over_time?.labels || [],
+        charts.emergency_cases_over_time?.values || [],
+        {
+            label: 'Emergency-like cases',
+            borderColor: '#e11d48',
+            backgroundColor: 'rgba(225,29,72,0.18)',
+            fill: true,
+            showLegend: false
+        }
+    );
+}
+
+function renderRecentSessions(rows = []) {
+    const tbody = document.getElementById('recentSessionsBody');
+    if (!tbody) return;
+    if (!rows.length) {
+        tbody.innerHTML = '<tr><td colspan="4" class="py-6 text-center text-slate-500">No sessions available yet.</td></tr>';
+        return;
+    }
+
+    tbody.innerHTML = rows.map(row => `
+        <tr>
+            <td class="py-4 pr-4">
+                <div class="font-semibold text-slate-900">${row.title}</div>
+                <div class="text-xs text-slate-500">#${row.id}</div>
+            </td>
+            <td class="py-4 pr-4 text-slate-700">${row.user_name}</td>
+            <td class="py-4 pr-4 text-slate-600">${row.email}</td>
+            <td class="py-4 text-slate-600">${row.created_at}</td>
+        </tr>
+    `).join('');
+}
+
+function renderDashboard(data) {
+    if (!data.available) {
+        renderKPIs({});
+        renderCharts({});
+        renderRecentSessions([]);
+        showStatus(data.message || 'Analytics are not available right now.', 'error');
+        return;
+    }
+
+    renderKPIs(data.kpis || {});
+    renderCharts(data.charts || {});
+    renderRecentSessions(data.recent_sessions || []);
+    showStatus('Dashboard loaded with live analytics from the current database.', 'info');
+}
+
+async function refreshDashboard() {
+    try {
+        const response = await fetch('/api/admin/analytics');
+        const data = await response.json();
+        analytics = data;
+        renderDashboard(data);
+    } catch (error) {
+        showStatus('Could not refresh analytics right now.', 'error');
+    }
+}
+
+document.getElementById('refreshBtn').addEventListener('click', refreshDashboard);
+document.getElementById('logoutBtn').addEventListener('click', async () => {
+    try {
+        const response = await fetch('/api/admin/logout', { method: 'POST' });
+        const data = await response.json();
+        window.location.href = data.redirect || '/admin/login';
+    } catch (error) {
+        window.location.href = '/admin/login';
+    }
+});
+
+renderDashboard(analytics);
+</script>
+</body>
+</html>

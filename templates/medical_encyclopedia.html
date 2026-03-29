@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Encyclopedia - HygionX</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0d9488 50%, #0891b2 100%);
+        }
+        .sidebar-collapsed {
+            width: 4rem;
+        }
+        .sidebar-expanded {
+            width: 16rem;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar-expanded {
+                width: 14rem;
+            }
+            .sidebar-collapsed {
+                width: 3rem;
+            }
+            .sidebar-text {
+                font-size: 0.875rem;
+            }
+            .ml-4 {
+                margin-left: 0.75rem;
+            }
+            .max-w-2xl {
+                max-width: 100%;
+            }
+            .p-6 {
+                padding: 1rem;
+            }
+            .px-6 {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .sidebar-expanded {
+                position: fixed;
+                left: 0;
+                top: 0;
+                height: 100vh;
+                z-index: 50;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            .sidebar-expanded.mobile-open {
+                transform: translateX(0);
+            }
+            .sidebar-collapsed {
+                width: 0;
+                overflow: hidden;
+            }
+            .sidebar-text {
+                display: none !important;
+            }
+            main {
+                margin-left: 0 !important;
+            }
+            .mobile-menu-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 40;
+                display: none;
+            }
+            .mobile-menu-overlay.active {
+                display: block;
+            }
+        }
+        
+        @media (min-width: 641px) {
+            .mobile-menu-toggle {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+            .desktop-only {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 h-screen flex">
+    <!-- Mobile Menu Overlay -->
+    <div id="mobileMenuOverlay" class="mobile-menu-overlay"></div>
+    
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar-expanded bg-white shadow-lg transition-all duration-300 flex flex-col">
+        <!-- Sidebar Header -->
+        <div class="p-4 border-b border-gray-200">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <i class="fas fa-stethoscope text-sky-600 text-xl mr-3"></i>
+                    <span class="sidebar-text font-bold text-gray-900">HygionX</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button id="sidebarToggle" class="text-gray-500 hover:text-gray-700 desktop-only">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <button id="mobileSidebarClose" class="text-gray-500 hover:text-gray-700 mobile-menu-toggle">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Menu -->
+        <nav class="flex-1 p-4 space-y-2">
+            <a href="/chat" class="flex items-center p-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors">
+                <i class="fas fa-comments w-5"></i>
+                <span class="sidebar-text ml-3">Health Assistant</span>
+            </a>
+            <a href="/timeline" class="flex items-center p-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors">
+                <i class="fas fa-calendar-alt w-5"></i>
+                <span class="sidebar-text ml-3">Health Timeline</span>
+            </a>
+            <a href="/medical-encyclopedia" class="flex items-center p-3 rounded-lg bg-sky-50 text-sky-600 hover:bg-sky-100 transition-colors">
+                <i class="fas fa-book-medical w-5"></i>
+                <span class="sidebar-text ml-3">Medical Encyclopedia</span>
+            </a>
+            <a href="/profile" class="flex items-center p-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors">
+                <i class="fas fa-user w-5"></i>
+                <span class="sidebar-text ml-3">Profile</span>
+            </a>
+            <a href="#" class="flex items-center p-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors">
+                <i class="fas fa-cog w-5"></i>
+                <span class="sidebar-text ml-3">Settings</span>
+            </a>
+        </nav>
+
+        <!-- Bottom Actions -->
+        <div class="p-4 border-t border-gray-200 space-y-2">
+            <a href="/help" class="flex items-center p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors">
+                <i class="fas fa-question-circle w-5"></i>
+                <span class="sidebar-text ml-3">Help</span>
+            </a>
+            <a href="#" class="flex items-center p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors">
+                <i class="fas fa-info-circle w-5"></i>
+                <span class="sidebar-text ml-3">About</span>
+            </a>
+            <button id="logoutBtn" class="flex items-center p-2 rounded-lg text-red-600 hover:bg-red-50 transition-colors w-full">
+                <i class="fas fa-sign-out-alt w-5"></i>
+                <span class="sidebar-text ml-3">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col">
+        <!-- Top Navigation Bar -->
+        <header class="bg-white shadow-sm border-b border-gray-200">
+            <div class="px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <!-- Mobile Menu Toggle -->
+                        <button id="mobileSidebarToggle" class="text-gray-500 hover:text-gray-700 mr-4 mobile-menu-toggle">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <div>
+                            <h1 class="text-2xl font-bold text-gray-900">Medical Encyclopedia</h1>
+                            <p class="text-sm text-gray-600">Search and learn about medical conditions</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2 sm:space-x-4">
+                        <!-- User Profile -->
+                        <div class="flex items-center">
+                            <div class="h-8 w-8 rounded-full bg-sky-600 flex items-center justify-center">
+                                <span class="text-white text-sm font-medium">U</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Encyclopedia Content -->
+        <div class="flex-1 overflow-y-auto p-6">
+            <div class="max-w-4xl mx-auto">
+                <!-- Search Section -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+                    <h2 class="text-lg font-semibold text-gray-900 mb-4">Search for a Disease or Condition</h2>
+                    <form id="searchForm" class="space-y-4">
+                        <div class="relative">
+                            <input type="text" 
+                                   id="diseaseSearch" 
+                                   placeholder="Enter disease name (e.g., Diabetes, Migraine, Malaria)..." 
+                                   class="w-full rounded-lg border border-gray-300 px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                                   required>
+                            <button type="submit" 
+                                    class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-sky-600 text-white p-2 rounded-lg hover:bg-sky-700 transition-colors">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <!-- Example Suggestions -->
+                    <div class="mt-4">
+                        <p class="text-sm text-gray-600 mb-2">Popular searches:</p>
+                        <div class="flex flex-wrap gap-2">
+                            <button class="example-search bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm hover:bg-gray-200 transition-colors">Diabetes</button>
+                            <button class="example-search bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm hover:bg-gray-200 transition-colors">Migraine</button>
+                            <button class="example-search bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm hover:bg-gray-200 transition-colors">Malaria</button>
+                            <button class="example-search bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm hover:bg-gray-200 transition-colors">Hypertension</button>
+                            <button class="example-search bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm hover:bg-gray-200 transition-colors">Asthma</button>
+                            <button class="example-search bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm hover:bg-gray-200 transition-colors">COVID-19</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Loading Indicator -->
+                <div id="loadingIndicator" class="hidden bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+                    <div class="flex items-center justify-center">
+                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-600 mr-3"></div>
+                        <span class="text-gray-600">Searching for disease information...</span>
+                    </div>
+                </div>
+
+                <!-- Results Section -->
+                <div id="resultsSection" class="hidden">
+                    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-lg font-semibold text-gray-900">Search Results</h3>
+                            <button id="clearResults" class="text-gray-500 hover:text-gray-700">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        
+                        <div id="diseaseInfo" class="space-y-4">
+                            <!-- Disease information will be inserted here -->
+                        </div>
+                        
+                        <!-- Source Attribution -->
+                        <div class="mt-6 pt-4 border-t border-gray-200">
+                            <p class="text-xs text-gray-500">
+                                <i class="fas fa-link mr-1"></i>
+                                Source: <span id="sourceInfo">Wikipedia</span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error Section -->
+                <div id="errorSection" class="hidden">
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-6">
+                        <div class="flex items-center">
+                            <i class="fas fa-exclamation-triangle text-red-600 mr-3"></i>
+                            <div>
+                                <h3 class="text-lg font-semibold text-red-900">Search Error</h3>
+                                <p class="text-red-700" id="errorMessage">Unable to retrieve disease information. Please try again.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Medical Disclaimer -->
+                <div class="mt-8 bg-amber-50 border border-amber-200 rounded-lg p-6">
+                    <div class="flex items-start">
+                        <i class="fas fa-info-circle text-amber-600 mr-3 mt-1"></i>
+                        <div>
+                            <h3 class="text-lg font-semibold text-amber-900 mb-2">Medical Disclaimer</h3>
+                            <p class="text-amber-800">
+                                This information is sourced from Wikipedia for educational purposes and should not replace professional medical advice. 
+                                Always consult with qualified healthcare providers for medical diagnosis and treatment.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let isSidebarExpanded = true;
+
+        // Sidebar Toggle
+        document.getElementById('sidebarToggle').addEventListener('click', () => {
+            const sidebar = document.getElementById('sidebar');
+            const sidebarTexts = document.querySelectorAll('.sidebar-text');
+            
+            isSidebarExpanded = !isSidebarExpanded;
+            
+            if (isSidebarExpanded) {
+                sidebar.classList.remove('sidebar-collapsed');
+                sidebar.classList.add('sidebar-expanded');
+                setTimeout(() => {
+                    sidebarTexts.forEach(text => text.style.display = 'block');
+                }, 150);
+            } else {
+                sidebar.classList.remove('sidebar-expanded');
+                sidebar.classList.add('sidebar-collapsed');
+                sidebarTexts.forEach(text => text.style.display = 'none');
+            }
+        });
+
+        // Mobile Menu Toggle
+        document.getElementById('mobileSidebarToggle').addEventListener('click', () => {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobileMenuOverlay');
+            
+            sidebar.classList.add('mobile-open');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        // Mobile Menu Close
+        document.getElementById('mobileSidebarClose').addEventListener('click', () => {
+            closeMobileSidebar();
+        });
+
+        // Mobile Menu Overlay Click
+        document.getElementById('mobileMenuOverlay').addEventListener('click', () => {
+            closeMobileSidebar();
+        });
+
+        function closeMobileSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobileMenuOverlay');
+            
+            sidebar.classList.remove('mobile-open');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 640) {
+                closeMobileSidebar();
+            }
+        });
+
+        // Example search buttons
+        document.querySelectorAll('.example-search').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.getElementById('diseaseSearch').value = btn.textContent;
+                document.getElementById('searchForm').dispatchEvent(new Event('submit'));
+            });
+        });
+
+        // Search form submission
+        document.getElementById('searchForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const searchTerm = document.getElementById('diseaseSearch').value.trim();
+            
+            if (!searchTerm) return;
+
+            // Show loading indicator
+            document.getElementById('loadingIndicator').classList.remove('hidden');
+            document.getElementById('resultsSection').classList.add('hidden');
+            document.getElementById('errorSection').classList.add('hidden');
+
+            try {
+                const response = await fetch('/api/disease-info', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ disease_name: searchTerm })
+                });
+
+                const data = await response.json();
+                
+                // Hide loading indicator
+                document.getElementById('loadingIndicator').classList.add('hidden');
+
+                if (data.success) {
+                    displayDiseaseInfo(data);
+                } else {
+                    showError(data.error || 'Unable to retrieve disease information.');
+                }
+                
+            } catch (error) {
+                document.getElementById('loadingIndicator').classList.add('hidden');
+                showError('Network error. Please try again.');
+            }
+        });
+
+        function displayDiseaseInfo(data) {
+            const diseaseInfoDiv = document.getElementById('diseaseInfo');
+            
+            diseaseInfoDiv.innerHTML = `
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-900 mb-2">${escapeHtml(data.disease_name)}</h4>
+                        <div class="prose max-w-none">
+                            <p class="text-gray-700 leading-relaxed">${escapeHtml(data.information)}</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('sourceInfo').textContent = data.source || 'Wikipedia';
+            document.getElementById('resultsSection').classList.remove('hidden');
+        }
+
+        function showError(message) {
+            document.getElementById('errorMessage').textContent = message;
+            document.getElementById('errorSection').classList.remove('hidden');
+        }
+
+        // Clear results
+        document.getElementById('clearResults').addEventListener('click', () => {
+            document.getElementById('resultsSection').classList.add('hidden');
+            document.getElementById('errorSection').classList.add('hidden');
+            document.getElementById('diseaseSearch').value = '';
+            document.getElementById('diseaseSearch').focus();
+        });
+
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            try {
+                await fetch('/api/logout', { method: 'POST' });
+                window.location.href = '/';
+            } catch (error) {
+                window.location.href = '/';
+            }
+        });
+
+        function escapeHtml(text) {
+            const map = {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            };
+            return text.replace(/[&<>"']/g, m => map[m]);
+        }
+    </script>
+</body>
+</html>

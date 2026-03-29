@@ -1,0 +1,348 @@
+symptom,synonyms
+fever,high temperature|running a fever|feverish feeling|elevated body temperature
+chills,shivering|body chills|feeling very cold|uncontrollable shivering
+fatigue,tiredness|extreme tiredness|low energy|feeling exhausted|weak
+weakness,feeling weak|lack of strength|reduced strength|body weakness
+weight loss,losing weight|unintentional weight loss|unexpected weight loss|body weight decrease
+weight gain,gaining weight|rapid weight gain|unexpected weight gain|body weight increase
+loss of appetite,no appetite|reduced appetite|lack of hunger|not feeling hungry
+increased appetite,very hungry|excess hunger|increased hunger|always feeling hungry
+night sweats,sweating at night|excess sweating during sleep|nighttime sweating|waking up sweating
+sweating,excess sweating|heavy sweating|profuse sweating|excess perspiration
+headache,head pain|pain in head|aching head|pressure in head
+frontal headache,forehead pain|pain in forehead|frontal head pain|forehead headache
+migraine headache,migraine attack|severe migraine|pulsating migraine pain|migraine episode
+dizziness,feeling dizzy|lightheadedness|spinning sensation|loss of balance feeling
+fainting,passing out|blackout|sudden collapse|temporary loss of consciousness
+loss of consciousness,blacked out|unconsciousness|passed out|not conscious
+confusion,mental confusion|disorientation|unclear thinking|trouble thinking clearly
+memory loss,forgetfulness|trouble remembering|poor memory|difficulty remembering
+difficulty concentrating,trouble focusing|poor concentration|cannot focus|focus difficulty
+seizures,convulsions|seizure attack|epileptic episode|uncontrolled shaking
+slurred speech,unclear speech|mumbled speech|slow speech|speech slurring
+focal weakness,localized weakness|weakness in one area|one-sided weakness|partial body weakness
+loss of sensation,numbness|loss of feeling|reduced sensation|cannot feel touch
+tingling sensation,pins and needles|prickling sensation|tingling feeling|electric sensation
+tremors,shaking hands|involuntary shaking|body tremble|hand tremors
+muscle weakness,weak muscles|loss of muscle strength|muscle fatigue|reduced muscle power
+muscle pain,muscle ache|aching muscles|sore muscles|muscle discomfort
+muscle cramps,muscle spasms|painful muscle tightening|muscle tightening|cramping muscles
+joint pain,pain in joints|aching joints|joint ache|joint discomfort
+joint swelling,swollen joints|joint inflammation|puffy joints|enlarged joints
+joint stiffness,stiff joints|difficulty moving joints|tight joints|restricted joint movement
+back pain,back ache|pain in back|spinal pain|lower back ache
+low back pain,lumbar pain|pain in lower back|lower spine pain|lumbar back ache
+neck pain,neck ache|pain in neck|cervical pain|aching neck
+shoulder pain,shoulder ache|pain in shoulder|aching shoulder|shoulder discomfort
+hip pain,hip ache|pain in hip|aching hip|hip discomfort
+knee pain,knee ache|pain in knee|aching knee|knee discomfort
+ankle pain,ankle ache|pain in ankle|aching ankle|ankle discomfort
+foot pain,foot ache|pain in foot|aching foot|foot discomfort
+chest pain,pain in chest|chest ache|pressure in chest|chest discomfort
+sharp chest pain,stabbing chest pain|sudden sharp chest pain|piercing chest pain|knife-like chest pain
+burning chest pain,burning sensation in chest|acid burning chest pain|chest burning feeling|burning pressure in chest
+chest tightness,tight chest|pressure in chest|squeezing chest feeling|constricted chest feeling
+palpitations,heart pounding|fluttering heartbeat|heart racing|strong heartbeat sensation
+irregular heartbeat,uneven heartbeat|abnormal heart rhythm|skipped heartbeat|irregular pulse
+rapid heartbeat,fast heartbeat|heart racing|high pulse rate|tachycardia feeling
+slow heartbeat,slow pulse|low heart rate|bradycardia feeling|sluggish heartbeat
+shortness of breath,breathlessness|trouble breathing|cannot breathe properly|difficulty catching breath
+difficulty breathing,breathing difficulty|hard to breathe|labored breathing|struggling to breathe
+wheezing,whistling breathing|high pitched breathing|noisy breathing|wheezing sound
+rapid breathing,fast breathing|quick breathing|short rapid breaths|increased breathing rate
+abnormal breathing sounds,crackling breathing|unusual lung sounds|abnormal lung noise|strange breathing sounds
+cough,persistent cough|dry cough|constant coughing|repeated coughing
+productive cough,cough with mucus|wet cough|phlegm cough|mucus producing cough
+coughing blood,blood in cough|bloody cough|coughing up blood|hemoptysis
+nasal congestion,blocked nose|stuffy nose|nasal blockage|congested nose
+runny nose,nasal discharge|dripping nose|watery nose|runny nasal mucus
+sinus congestion,blocked sinuses|sinus blockage|sinus pressure|congested sinuses
+sinus pain,pain in sinuses|sinus pressure pain|sinus headache|sinus ache
+sore throat,throat pain|painful throat|irritated throat|throat soreness
+hoarse voice,raspy voice|rough voice|voice hoarseness|weak voice
+difficulty swallowing,trouble swallowing|pain while swallowing|swallowing difficulty|dysphagia feeling
+throat swelling,swollen throat|inflamed throat|throat enlargement|throat puffiness
+throat tightness,tight throat|constricted throat|pressure in throat|throat squeezing sensation
+nausea,feeling nauseous|urge to vomit|queasy stomach|feeling sick
+vomiting,throwing up|being sick|vomiting food|vomiting repeatedly
+vomiting blood,bloody vomit|throwing up blood|blood in vomit|hematemesis
+diarrhea,loose stool|watery stool|runny stool|frequent loose motion
+constipation,hard stool|difficulty passing stool|infrequent bowel movement|blocked bowel movement
+abdominal pain,stomach pain|belly pain|stomach ache|belly ache
+sharp abdominal pain,stabbing stomach pain|sharp belly pain|sudden abdominal pain|piercing stomach pain
+burning abdominal pain,burning stomach pain|burning belly pain|acidic stomach burning|stomach burning sensation
+upper abdominal pain,upper stomach pain|pain above stomach|upper belly pain|epigastric pain
+lower abdominal pain,lower stomach pain|pain in lower belly|lower belly ache|lower abdominal discomfort
+abdominal bloating,bloated stomach|swollen belly|gas bloating|stomach fullness
+abdominal distention,distended abdomen|swollen abdomen|expanded belly|abdominal swelling
+blood in stool,bloody stool|rectal bleeding in stool|blood during bowel movement|blood mixed with stool
+black stool,dark stool|tarry stool|black colored stool|melena stool
+heartburn,acid reflux|burning chest sensation|stomach acid burning|acidic chest pain
+regurgitation,acid coming up|food coming back up|stomach acid in throat|reflux of food
+symptom,synonyms
+flatulence,gas|passing gas|excess intestinal gas|gas buildup
+difficulty urinating,trouble urinating|hard to urinate|urination difficulty|difficulty passing urine
+painful urination,burning urination|pain while urinating|burning while peeing|pain during urination
+frequent urination,urinating often|peeing frequently|need to urinate often|frequent bathroom trips
+urinary retention,inability to urinate|difficulty emptying bladder|urine retention|trouble passing urine
+blood in urine,urine with blood|bloody urine|red urine|hematuria
+urinary incontinence,loss of bladder control|leaking urine|involuntary urination|unable to hold urine
+low urine output,reduced urine production|very little urine|decreased urination|oliguria
+excessive urination,urinating too much|excess urine output|polyuria|frequent large urination
+jaundice,yellow skin|yellow eyes|yellowing of skin|yellow discoloration
+skin rash,skin eruption|red rash|skin irritation rash|patchy rash
+itching skin,itchy skin|skin itching|constant itching|irritating itch
+skin swelling,swollen skin|inflamed skin|puffy skin|skin puffiness
+skin lesion,skin sore|skin abnormality|skin wound|skin mark
+acne,pimples|skin pimples|facial acne|breakouts
+skin dryness,dry skin|rough skin|flaky skin|dehydrated skin
+skin redness,red skin|inflamed skin|skin irritation redness|skin flushing
+skin infection,infected skin|skin inflammation infection|bacterial skin infection|skin disease
+swollen lymph nodes,enlarged lymph nodes|swollen glands|inflamed lymph nodes|lymph node enlargement
+eye pain,pain in eye|eye ache|eye soreness|eye discomfort
+eye redness,red eye|bloodshot eyes|eye irritation redness|inflamed eye
+blurred vision,blurry vision|unclear vision|foggy vision|vision blur
+double vision,seeing double|two images vision|split vision|diplopia
+loss of vision,blindness|vision loss|cannot see|sudden blindness
+eye discharge,eye fluid discharge|eye pus|watery eye discharge|eye secretion
+eye irritation,itchy eyes|burning eyes|eye discomfort irritation|irritated eyes
+ear pain,ear ache|pain in ear|ear soreness|ear discomfort
+ear discharge,fluid from ear|ear drainage|pus from ear|ear secretion
+ringing in ears,ear ringing|buzzing in ears|tinnitus sound|ringing noise in ear
+hearing loss,reduced hearing|difficulty hearing|partial deafness|hearing impairment
+ear fullness,blocked ear feeling|ear pressure|ear fullness sensation|clogged ear
+jaw pain,pain in jaw|jaw ache|aching jaw|jaw discomfort
+toothache,tooth pain|pain in tooth|aching tooth|dental pain
+mouth ulcer,mouth sore|oral ulcer|mouth lesion|painful mouth sore
+dry mouth,less saliva|mouth dryness|sticky mouth|xerostomia
+lip swelling,swollen lips|lip inflammation|lip puffiness|lip enlargement
+facial pain,pain in face|face ache|facial ache|face discomfort
+facial numbness,numb face|loss of sensation in face|reduced face sensation|tingling face
+facial swelling,swollen face|face puffiness|inflamed face|face enlargement
+neck swelling,swollen neck|neck enlargement|neck puffiness|neck inflammation
+neck stiffness,stiff neck|difficulty moving neck|tight neck|neck rigidity
+groin pain,pain in groin|groin ache|aching groin|groin discomfort
+leg swelling,swollen leg|leg edema|leg puffiness|inflamed leg
+foot swelling,swollen foot|foot edema|foot puffiness|inflamed foot
+hand swelling,swollen hand|hand puffiness|hand edema|inflamed hand
+arm swelling,swollen arm|arm puffiness|arm edema|inflamed arm
+peripheral edema,limb swelling|fluid retention in limbs|extremity swelling|peripheral swelling
+general malaise,feeling unwell|overall discomfort|general illness feeling|body malaise
+restlessness,inability to relax|constant movement|uneasy feeling|agitated state
+anxiety,feeling anxious|constant worry|nervous feeling|excess worry
+depression,low mood|persistent sadness|feeling depressed|loss of interest
+insomnia,trouble sleeping|cannot sleep|difficulty sleeping|poor sleep
+sleepiness,drowsiness|feeling sleepy|excess sleepiness|daytime sleepiness
+nightmares,bad dreams|disturbing dreams|frightening dreams|night terrors
+loss of balance,balance problems|difficulty balancing|unstable balance|balance loss
+difficulty walking,trouble walking|walking difficulty|cannot walk properly|impaired walking
+difficulty standing,trouble standing|cannot stand properly|standing difficulty|impaired standing
+confusion after injury,post injury confusion|disorientation after injury|confused after trauma|mental confusion after injury
+sudden severe headache,extreme headache|sudden intense head pain|worst headache|severe sudden migraine
+chest pressure,pressure in chest|heavy chest feeling|tight pressure chest|chest heaviness
+cyanosis (bluish skin),blue skin|bluish discoloration|blue lips skin|cyanotic skin
+burning urination,burning while urinating|painful urine burning|burning pee sensation|urine burning pain
+night urination,waking to urinate|urinating at night|nocturia|frequent night urination
+vomiting after eating,throwing up after food|vomiting post meal|vomiting after meals|food induced vomiting
+abdominal cramps,stomach cramps|belly cramps|cramping stomach pain|abdominal cramping
+difficulty sleeping,trouble sleeping|cannot fall asleep|sleep difficulty|poor sleep quality
+ear fullness sensation,ear pressure feeling|blocked ear sensation|ear clogging feeling|ear fullness pressure
+ear itching,itchy ear|ear irritation itching|ear tickling|ear itching sensation
+ear ringing,ringing sound in ear|buzzing ear sound|ear ringing noise|tinnitus ringing
+ear blockage sensation,blocked ear feeling|clogged ear sensation|ear obstruction feeling|ear pressure blockage
+ear fluid discharge,fluid from ear|watery ear discharge|ear drainage fluid|ear secretion fluid
+facial redness,red face|face flushing|inflamed face redness|facial skin redness
+facial tingling,tingling face|pins and needles face|face prickling|face electric sensation
+facial drooping,drooping face|one side face droop|facial sagging|face muscle droop
+facial muscle weakness,weak face muscles|reduced facial strength|facial paralysis weakness|face muscle weakness
+symptom,synonyms
+shoulder stiffness,stiff shoulder|tight shoulder joint|difficulty moving shoulder|restricted shoulder movement
+shoulder swelling,swollen shoulder|shoulder inflammation|puffy shoulder|shoulder joint swelling
+shoulder weakness,weak shoulder|reduced shoulder strength|difficulty lifting shoulder|loss of shoulder strength
+arm stiffness,stiff arm|tight arm muscles|difficulty moving arm|restricted arm movement
+arm weakness,weak arm|loss of arm strength|reduced arm power|difficulty lifting arm
+arm cramps,arm muscle cramps|painful arm spasms|arm muscle tightening|cramping arm muscles
+hand stiffness,stiff hand|tight hand joints|difficulty moving fingers|restricted hand movement
+hand weakness,weak hand|loss of hand strength|reduced grip strength|difficulty holding objects
+wrist pain,wrist ache|pain in wrist|aching wrist|wrist discomfort
+wrist swelling,swollen wrist|wrist inflammation|puffy wrist|wrist joint swelling
+wrist stiffness,stiff wrist|tight wrist joint|restricted wrist movement|difficulty bending wrist
+finger pain,finger ache|pain in finger|aching finger|finger discomfort
+finger swelling,swollen finger|finger inflammation|puffy finger|finger joint swelling
+finger stiffness,stiff fingers|tight finger joints|restricted finger movement|difficulty bending fingers
+leg cramps,leg muscle cramps|painful leg spasms|cramping leg muscles|leg muscle tightening
+leg weakness,weak legs|loss of leg strength|reduced leg power|difficulty standing on legs
+knee swelling,swollen knee|knee inflammation|puffy knee|knee joint swelling
+knee stiffness,stiff knee|tight knee joint|difficulty bending knee|restricted knee movement
+ankle swelling,swollen ankle|ankle inflammation|puffy ankle|ankle joint swelling
+ankle stiffness,stiff ankle|tight ankle joint|restricted ankle movement|difficulty bending ankle
+toe pain,toe ache|pain in toe|aching toe|toe discomfort
+toe swelling,swollen toe|toe inflammation|puffy toe|toe joint swelling
+toe stiffness,stiff toes|tight toe joints|difficulty moving toes|restricted toe movement
+bone pain,aching bones|bone ache|pain in bones|deep bone pain
+muscle stiffness,stiff muscles|tight muscles|difficulty moving muscles|muscle rigidity
+joint redness,red joints|inflamed joints|joint skin redness|irritated joints
+joint warmth,warm joints|heated joints|inflamed warm joints|hot joints
+skin discoloration,skin color change|patchy skin color|abnormal skin color|uneven skin tone
+skin bruising,bruised skin|skin bruises|purple skin spots|skin contusions
+skin bleeding,bleeding skin|skin hemorrhage|skin bleeding spots|cutaneous bleeding
+skin peeling,peeling skin|skin flaking|skin shedding|skin scaling
+skin irritation,irritated skin|skin discomfort|itchy irritated skin|skin inflammation irritation
+skin lumps,skin bumps|skin nodules|raised skin lumps|skin growth lumps
+skin burning sensation,burning skin|skin heat sensation|skin burning feeling|skin irritation burning
+itchy scalp,scalp itching|itching head scalp|scalp irritation itch|itchy head skin
+dry scalp,scalp dryness|flaky scalp|rough scalp skin|dehydrated scalp
+hair loss,losing hair|excess hair fall|hair thinning|balding hair
+excess hair growth,abnormal hair growth|excess body hair|hirsutism hair growth|unusual hair growth
+abnormal nail growth,irregular nail growth|nail deformity|abnormal nail shape|nail growth disorder
+brittle nails,weak nails|fragile nails|easily broken nails|soft nails
+nail discoloration,discolored nails|yellow nails|abnormal nail color|darkened nails
+pale skin,light colored skin|pale complexion|loss of skin color|white looking skin
+cold intolerance,cannot tolerate cold|sensitive to cold|cold sensitivity|feels cold easily
+heat intolerance,cannot tolerate heat|sensitive to heat|heat sensitivity|feels hot easily
+excess thirst,very thirsty|constant thirst|increased thirst|polydipsia
+excess hunger,very hungry|constant hunger|increased appetite|polyphagia
+excess fatigue,extreme fatigue|severe tiredness|very low energy|persistent exhaustion
+weight fluctuation,weight changes|body weight variation|weight going up and down|unstable weight
+slow wound healing,wounds heal slowly|delayed wound healing|slow injury recovery|cuts heal slowly
+persistent cough,long lasting cough|ongoing cough|continuous coughing|chronic cough
+chronic cough,long term cough|persistent coughing|cough lasting weeks|constant cough
+chest congestion,phlegm in chest|mucus chest buildup|congested chest|chest mucus blockage
+difficulty inhaling deeply,cannot take deep breath|pain on deep inhale|restricted deep breathing|trouble breathing deeply
+pain while breathing,breathing pain|painful breathing|pain when inhaling|pain on respiration
+lung crackling sounds,crackling lungs|rales sound|crackles in lungs|lung crackle noise
+lung wheezing sounds,wheezing lungs|whistling lungs|wheeze breathing sound|lung wheeze noise
+rapid shallow breathing,fast shallow breaths|short shallow breathing|quick shallow breathing|rapid light breathing
+choking sensation,feeling of choking|throat choking feeling|cannot swallow air|airway choking sensation
+aspiration sensation,food entering airway feeling|aspiration feeling|inhaled food sensation|aspiration discomfort
+difficulty clearing throat,cannot clear throat|persistent throat clearing|throat mucus stuck|trouble clearing throat
+voice loss,loss of voice|cannot speak|aphonia voice loss|no voice
+voice weakness,weak voice|low voice strength|reduced voice power|faint voice
+dry throat,throat dryness|scratchy throat|dry feeling throat|throat dehydration
+throat irritation,irritated throat|throat discomfort|itchy throat|burning throat
+swollen tonsils,enlarged tonsils|inflamed tonsils|tonsil swelling|tonsil enlargement
+tonsil pain,painful tonsils|tonsil ache|tonsil discomfort|aching tonsils
+oral bleeding,bleeding in mouth|mouth bleeding|blood in mouth|oral hemorrhage
+gum pain,pain in gums|aching gums|gum soreness|gum discomfort
+bleeding gums,gum bleeding|blood from gums|gum hemorrhage|bleeding gum tissue
+tongue swelling,swollen tongue|tongue enlargement|inflamed tongue|puffy tongue
+tongue pain,pain in tongue|aching tongue|tongue soreness|tongue discomfort
+tongue ulcers,ulcers on tongue|tongue sores|painful tongue lesions|tongue mouth ulcers
+bad breath,halitosis|mouth odor|unpleasant breath|foul breath smell
+difficulty chewing,trouble chewing|pain while chewing|cannot chew food|chewing difficulty
+difficulty opening mouth,trouble opening mouth|restricted jaw opening|jaw opening difficulty|limited mouth opening
+jaw stiffness,stiff jaw|tight jaw muscles|restricted jaw movement|jaw rigidity
+jaw locking,locked jaw|cannot move jaw|jaw stuck|temporarily locked jaw
+facial muscle spasms,face muscle twitching|facial spasms|face muscle contractions|involuntary face twitch
+abdominal swelling,swollen abdomen|belly swelling|stomach enlargement|abdominal enlargement
+gastric pain,stomach pain|gastric ache|pain in stomach|gastric discomfort
+acid reflux,stomach acid reflux|acid coming up throat|gastroesophageal reflux|acid regurgitation
+stomach cramps,stomach spasms|abdominal cramps|painful stomach contractions|belly cramps
+stomach burning,burning stomach|acidic stomach burning|stomach heat sensation|burning belly feeling
+stomach pain,pain in stomach|stomach ache|aching stomach|stomach discomfort
+food intolerance,cannot tolerate food|food sensitivity|digestive intolerance|reaction to certain foods
+difficulty digesting food,poor digestion|slow digestion|digestive difficulty|food digestion problems
+belching,burping|excess burping|air burps|gas burping
+hiccups,hiccoughs|repeated hiccups|diaphragm spasms|persistent hiccups
+swallowing pain,pain when swallowing|painful swallowing|odynophagia|burning swallow pain
+symptom,synonyms
+rectal bleeding,blood from rectum|bleeding during bowel movement|anal bleeding|blood passing from rectum
+anal itching,itchy anus|itching around anus|anal irritation itching|rectal itching
+anal swelling,swollen anus|anal inflammation|puffy anal area|inflamed anus
+rectal pain,pain in rectum|anal pain|rectal ache|rectal discomfort
+rectal discharge,rectal fluid discharge|anal discharge|mucus from rectum|rectal secretion
+pelvic pain,pain in pelvis|pelvic ache|lower pelvic pain|pelvic discomfort
+vaginal discharge,vaginal fluid discharge|abnormal vaginal discharge|vaginal secretion|fluid from vagina
+vaginal bleeding,bleeding from vagina|abnormal vaginal bleeding|unexpected vaginal bleeding|vaginal blood loss
+pain during intercourse,painful intercourse|pain during sex|dyspareunia|sexual pain
+menstrual cramps,period cramps|painful menstruation cramps|lower abdominal cramps during period|menstrual pain
+irregular menstruation,irregular periods|uneven menstrual cycle|abnormal periods|inconsistent menstruation
+heavy menstruation,heavy periods|excess menstrual bleeding|menorrhagia|very heavy menstrual flow
+missed periods,absent periods|skipped menstruation|amenorrhea|no menstrual cycle
+postmenopausal bleeding,bleeding after menopause|post menopause bleeding|unexpected bleeding after menopause|menopause bleeding
+testicular pain,pain in testicles|testicle ache|aching testicles|testicular discomfort
+scrotal swelling,swollen scrotum|scrotal enlargement|inflamed scrotum|puffy scrotum
+scrotal lumps,lumps in scrotum|scrotal nodules|testicular lumps|scrotal masses
+penile discharge,fluid from penis|penile secretion|discharge from penis|penile fluid leakage
+penile pain,pain in penis|penile ache|penis discomfort|aching penis
+erectile dysfunction,inability to maintain erection|erection problems|impotence|difficulty achieving erection
+loss of libido,reduced sex drive|low sexual desire|decreased libido|lack of sexual interest
+urinary urgency,sudden urge to urinate|strong need to urinate|urgent urination|bladder urgency
+urinary frequency,frequent urination|urinating very often|frequent need to pee|increased urination frequency
+bladder pressure,pressure in bladder|bladder fullness sensation|bladder discomfort pressure|tight bladder feeling
+bladder pain,pain in bladder|bladder ache|bladder discomfort|aching bladder
+kidney pain,pain in kidney|kidney ache|kidney discomfort|aching kidney
+flank pain,pain in flank|side abdominal pain|side back pain|flank ache
+blood clots in urine,clotted blood in urine|urine blood clots|blood clumps in urine|hematuria clots
+reduced urine flow,weak urine stream|slow urine flow|reduced urination stream|difficulty urine flow
+excessive sweating at night,heavy night sweating|extreme night sweats|nighttime excessive sweating|severe night sweating
+trembling hands,shaking hands|hand tremors|involuntary hand shaking|hand trembling
+shivering,body shaking|cold shivering|involuntary body tremble|cold trembling
+muscle twitching,small muscle spasms|involuntary muscle twitch|muscle jerks|muscle flickering
+difficulty gripping objects,weak grip|cannot hold objects firmly|grip strength weakness|trouble gripping items
+difficulty lifting arms,trouble raising arms|weak arms when lifting|cannot lift arms easily|arm lifting difficulty
+difficulty climbing stairs,trouble climbing steps|stair climbing difficulty|cannot climb stairs properly|weakness climbing stairs
+stiff gait,rigid walking|stiff walking pattern|difficulty walking smoothly|rigid gait
+unsteady walking,unstable walking|wobbly walking|loss of walking balance|unbalanced walking
+difficulty maintaining posture,posture instability|trouble keeping posture|unstable posture|poor posture control
+difficulty balancing,poor balance|balance difficulty|unstable balance|trouble staying balanced
+poor coordination,loss of coordination|clumsy movements|coordination difficulty|impaired coordination
+speech difficulty,trouble speaking|speech problems|difficulty forming words|speech impairment
+word finding difficulty,cannot find words|difficulty recalling words|word retrieval problem|speech hesitation
+behavior changes,personality changes|behavioral changes|unusual behavior|altered behavior
+hallucinations,seeing things not real|hearing things not real|false perceptions|hallucinatory experiences
+delusions,false beliefs|strong false ideas|irrational beliefs|delusional thinking
+paranoia,extreme suspicion|paranoid thinking|irrational distrust|paranoid feelings
+extreme mood swings,rapid mood changes|severe mood shifts|emotional instability|sudden mood changes
+panic attacks,sudden panic|intense fear episodes|panic episodes|anxiety attacks
+hyperactivity,excess activity|restless hyper behavior|constant overactivity|high energy behavior
+lack of motivation,no motivation|low drive|reduced motivation|loss of initiative
+emotional numbness,absence of emotions|emotional dullness|lack of emotional response|feeling emotionally numb
+social withdrawal,avoiding social interaction|isolation from people|reduced social interaction|social avoidance
+low self-esteem,poor self confidence|negative self image|low self worth|lack of confidence
+irritability,easily irritated|short temper|quick anger|easily annoyed
+anger outbursts,sudden anger|rage episodes|frequent angry reactions|explosive anger
+apathy,lack of interest|emotional indifference|reduced concern|absence of motivation
+excessive sleep,oversleeping|sleeping too much|prolonged sleep|hypersomnia
+sleepwalking,walking while asleep|somnambulism|sleep movement walking|night walking while asleep
+snoring,loud breathing during sleep|sleep snoring|noisy sleeping|heavy snoring
+sleep apnea episodes,breathing pauses during sleep|sleep apnea attacks|temporary breathing stop in sleep|sleep breathing interruption
+daytime fatigue,tired during day|daytime tiredness|sleepy during day|low energy daytime
+difficulty waking up,trouble waking|hard to wake up|morning wake difficulty|cannot wake easily
+persistent thirst,constant thirst|always thirsty|ongoing thirst|continuous thirst
+dehydration signs,signs of dehydration|body dehydration symptoms|lack of body fluids|severe dehydration feeling
+dry skin patches,patchy dry skin|rough dry patches|flaky skin patches|skin dryness patches
+skin cracking,cracked skin|skin fissures|skin splitting|skin breaking
+sensitivity to light,light sensitivity|photophobia|discomfort in bright light|light intolerance
+sensitivity to sound,sound sensitivity|noise intolerance|phonophobia|discomfort from loud sounds
+vision distortion,distorted vision|warped vision|visual distortion|altered vision
+eye floaters,floating spots in vision|moving dots in vision|visual floaters|tiny moving shadows in eye
+eye strain,tired eyes|eye fatigue|overworked eyes|eye tension
+eye swelling,swollen eye|puffy eye|eye inflammation swelling|inflamed eye
+eyelid twitching,eye twitch|eyelid spasm|twitching eyelid muscle|eye lid flutter
+eyelid swelling,swollen eyelid|puffy eyelids|inflamed eyelids|eyelid enlargement
+eyelid redness,red eyelids|inflamed eyelids|eyelid irritation redness|reddened eyelids
+eyelid pain,pain in eyelid|eyelid ache|eyelid discomfort|aching eyelid
+symptom,synonyms
+catarrh,mucus buildup|nasal mucus discharge|excess nasal mucus|thick nasal mucus
+breast pain,pain in breast|breast ache|aching breast|breast discomfort
+breast swelling,swollen breast|breast enlargement|inflamed breast|puffy breast
+dehydration,body fluid loss|severe lack of fluids|extreme dehydration|dehydrated body
+excessive sweating,heavy sweating|profuse sweating|excess perspiration|very sweaty
+earache,pain in ear|ear ache|aching ear|ear discomfort
+hearing loss,reduced hearing|difficulty hearing|partial deafness|hearing impairment
+nosebleed,bleeding nose|nasal bleeding|blood from nose|epistaxis
+tinnitus,ringing in ears|buzzing in ears|ear ringing sound|persistent ear noise
+vertigo,spinning sensation|room spinning feeling|balance spinning dizziness|rotational dizziness
+mouth ulcer,mouth sore|oral ulcer|painful mouth lesion|mouth canker sore
+toothache,tooth pain|aching tooth|dental pain|pain in tooth
+swollen glands,swollen lymph glands|enlarged glands|inflamed glands|gland swelling
+abdominal pain,stomach pain|belly pain|stomach ache|abdominal ache
+stomach ache,stomach pain|belly ache|aching stomach|abdominal discomfort
+shoulder pain,shoulder ache|pain in shoulder|aching shoulder|shoulder discomfort
+hip pain,hip ache|pain in hip|aching hip|hip discomfort
+knee pain,knee ache|pain in knee|aching knee|knee discomfort
+foot pain,foot ache|pain in foot|aching foot|foot discomfort
+back pain,back ache|pain in back|spinal pain|lower back ache
+neck pain,neck ache|pain in neck|aching neck|cervical pain
+breathlessness,shortness of breath|difficulty breathing|trouble breathing|cannot breathe easily

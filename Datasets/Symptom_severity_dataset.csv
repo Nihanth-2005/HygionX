@@ -1,0 +1,344 @@
+symptom,weight,red_flag
+fever,3,no
+chills,2,no
+fatigue,3,no
+weakness,3,no
+weight loss,3,no
+weight gain,2,no
+loss of appetite,2,no
+increased appetite,2,no
+night sweats,3,no
+sweating,2,no
+headache,2,no
+frontal headache,2,no
+migraine headache,3,no
+dizziness,3,no
+fainting,4,yes
+loss of consciousness,5,yes
+confusion,4,yes
+memory loss,3,no
+difficulty concentrating,2,no
+seizures,5,yes
+slurred speech,5,yes
+focal weakness,5,yes
+loss of sensation,5,yes
+tingling sensation,2,no
+tremors,2,no
+muscle weakness,3,no
+muscle pain,2,no
+muscle cramps,2,no
+joint pain,2,no
+joint swelling,3,no
+joint stiffness,2,no
+back pain,2,no
+low back pain,2,no
+neck pain,2,no
+shoulder pain,2,no
+hip pain,2,no
+knee pain,2,no
+ankle pain,2,no
+foot pain,2,no
+chest pain,4,yes
+sharp chest pain,4,yes
+burning chest pain,4,yes
+chest tightness,4,yes
+palpitations,2,no
+irregular heartbeat,4,yes
+rapid heartbeat,3,no
+slow heartbeat,3,no
+shortness of breath,4,yes
+difficulty breathing,4,yes
+wheezing,3,no
+rapid breathing,3,no
+abnormal breathing sounds,3,no
+cough,2,no
+productive cough,2,no
+coughing blood,5,yes
+nasal congestion,1,no
+runny nose,1,no
+sinus congestion,2,no
+sinus pain,2,no
+sore throat,2,no
+hoarse voice,2,no
+difficulty swallowing,3,no
+throat swelling,3,yes
+throat tightness,3,no
+nausea,3,no
+vomiting,3,no
+vomiting blood,5,yes
+diarrhea,2,no
+constipation,2,no
+abdominal pain,2,no
+sharp abdominal pain,3,no
+burning abdominal pain,2,no
+upper abdominal pain,2,no
+lower abdominal pain,2,no
+abdominal bloating,2,no
+abdominal distention,4,yes
+blood in stool,4,yes
+black stool,4,yes
+heartburn,2,no
+regurgitation,2,no
+flatulence,1,no
+difficulty urinating,2,no
+painful urination,2,no
+frequent urination,2,no
+urinary retention,3,no
+blood in urine,3,no
+urinary incontinence,2,no
+low urine output,5,yes
+excessive urination,2,no
+jaundice,4,yes
+skin rash,1,no
+itching skin,1,no
+skin swelling,2,no
+skin lesion,2,no
+acne,1,no
+skin dryness,1,no
+skin redness,2,no
+skin infection,3,no
+swollen lymph nodes,3,no
+eye pain,2,no
+eye redness,2,no
+blurred vision,2,no
+double vision,3,no
+loss of vision,5,yes
+eye discharge,2,no
+eye irritation,2,no
+ear pain,1,no
+ear discharge,2,no
+ringing in ears,2,no
+hearing loss,2,no
+ear fullness,2,no
+jaw pain,2,no
+toothache,2,no
+mouth ulcer,2,no
+dry mouth,1,no
+lip swelling,2,no
+facial pain,2,no
+facial numbness,3,no
+facial swelling,3,no
+neck swelling,2,no
+neck stiffness,4,yes
+groin pain,2,no
+leg swelling,3,no
+foot swelling,2,no
+hand swelling,2,no
+arm swelling,2,no
+peripheral edema,3,no
+general malaise,2,no
+restlessness,2,no
+anxiety,2,no
+depression,2,no
+insomnia,2,no
+sleepiness,2,no
+nightmares,2,no
+loss of balance,3,no
+difficulty walking,3,no
+difficulty standing,3,no
+confusion after injury,4,yes
+sudden severe headache,4,yes
+chest pressure,4,yes
+cyanosis (bluish skin),5,yes
+burning urination,2,no
+night urination,2,no
+vomiting after eating,3,no
+abdominal cramps,2,no
+difficulty sleeping,2,no
+ear fullness sensation,2,no
+ear itching,1,no
+ear ringing,2,no
+ear blockage sensation,2,no
+ear fluid discharge,2,no
+facial redness,2,no
+facial tingling,2,no
+facial drooping,5,yes
+facial muscle weakness,4,yes
+shoulder stiffness,2,no
+shoulder swelling,2,no
+shoulder weakness,2,no
+arm stiffness,2,no
+arm weakness,2,no
+arm cramps,2,no
+hand stiffness,2,no
+hand weakness,2,no
+wrist pain,2,no
+wrist swelling,2,no
+wrist stiffness,2,no
+finger pain,2,no
+finger swelling,2,no
+finger stiffness,2,no
+leg cramps,2,no
+leg weakness,2,no
+knee swelling,2,no
+knee stiffness,2,no
+ankle swelling,2,no
+ankle stiffness,2,no
+toe pain,2,no
+toe swelling,2,no
+toe stiffness,2,no
+bone pain,2,no
+muscle stiffness,2,no
+joint redness,2,no
+joint warmth,2,no
+skin discoloration,2,no
+skin bruising,2,no
+skin bleeding,3,no
+skin peeling,1,no
+skin irritation,1,no
+skin lumps,2,no
+skin burning sensation,2,no
+itchy scalp,1,no
+dry scalp,1,no
+hair loss,2,no
+excess hair growth,2,no
+abnormal nail growth,2,no
+brittle nails,1,no
+nail discoloration,2,no
+pale skin,2,no
+cold intolerance,2,no
+heat intolerance,2,no
+excess thirst,2,no
+excess hunger,2,no
+excess fatigue,3,no
+weight fluctuation,2,no
+slow wound healing,3,no
+persistent cough,2,no
+chronic cough,2,no
+chest congestion,2,no
+difficulty inhaling deeply,3,no
+pain while breathing,3,no
+lung crackling sounds,3,no
+lung wheezing sounds,3,no
+rapid shallow breathing,3,no
+choking sensation,4,yes
+aspiration sensation,4,yes
+difficulty clearing throat,2,no
+voice loss,2,no
+voice weakness,2,no
+dry throat,1,no
+throat irritation,2,no
+swollen tonsils,3,no
+tonsil pain,2,no
+oral bleeding,3,no
+gum pain,2,no
+bleeding gums,2,no
+tongue swelling,2,no
+tongue pain,2,no
+tongue ulcers,2,no
+bad breath,1,no
+difficulty chewing,2,no
+difficulty opening mouth,2,no
+jaw stiffness,2,no
+jaw locking,3,no
+facial muscle spasms,3,no
+abdominal swelling,3,no
+gastric pain,2,no
+acid reflux,2,no
+stomach cramps,2,no
+stomach burning,2,no
+stomach pain,2,no
+food intolerance,2,no
+difficulty digesting food,2,no
+belching,1,no
+hiccups,1,no
+swallowing pain,2,no
+rectal bleeding,5,yes
+anal itching,1,no
+anal swelling,2,no
+rectal pain,2,no
+rectal discharge,3,no
+pelvic pain,2,no
+vaginal discharge,2,no
+vaginal bleeding,3,no
+pain during intercourse,2,no
+menstrual cramps,2,no
+irregular menstruation,2,no
+heavy menstruation,3,no
+missed periods,2,no
+postmenopausal bleeding,4,yes
+testicular pain,3,no
+scrotal swelling,2,no
+scrotal lumps,2,no
+penile discharge,2,no
+penile pain,2,no
+erectile dysfunction,2,no
+loss of libido,2,no
+urinary urgency,2,no
+urinary frequency,2,no
+bladder pressure,2,no
+bladder pain,2,no
+kidney pain,3,no
+flank pain,3,no
+blood clots in urine,4,yes
+reduced urine flow,3,no
+excessive sweating at night,3,no
+trembling hands,2,no
+shivering,2,no
+muscle twitching,2,no
+difficulty gripping objects,2,no
+difficulty lifting arms,2,no
+difficulty climbing stairs,2,no
+stiff gait,2,no
+unsteady walking,3,no
+difficulty maintaining posture,2,no
+difficulty balancing,3,no
+poor coordination,3,no
+speech difficulty,3,no
+word finding difficulty,3,no
+behavior changes,2,no
+hallucinations,3,no
+delusions,3,no
+paranoia,3,no
+extreme mood swings,2,no
+panic attacks,3,no
+hyperactivity,2,no
+lack of motivation,2,no
+emotional numbness,2,no
+social withdrawal,2,no
+low self-esteem,2,no
+irritability,2,no
+anger outbursts,2,no
+apathy,2,no
+excessive sleep,2,no
+sleepwalking,2,no
+snoring,2,no
+sleep apnea episodes,5,yes
+daytime fatigue,2,no
+difficulty waking up,2,no
+persistent thirst,2,no
+dehydration signs,3,no
+dry skin patches,1,no
+skin cracking,1,no
+sensitivity to light,2,no
+sensitivity to sound,2,no
+vision distortion,3,no
+eye floaters,2,no
+eye strain,2,no
+eye swelling,2,no
+eyelid twitching,1,no
+eyelid swelling,2,no
+eyelid redness,2,no
+eyelid pain,2,no
+catarrh,1,no
+breast pain,2,no
+breast swelling,2,no
+dehydration,4,yes
+excessive sweating,2,no
+earache,2,no
+hearing loss,2,no
+nosebleed,2,no
+tinnitus,2,no
+vertigo,3,no
+mouth ulcer,2,no
+toothache,2,no
+swollen glands,3,no
+abdominal pain,2,no
+stomach ache,2,no
+shoulder pain,2,no
+hip pain,2,no
+knee pain,2,no
+foot pain,2,no
+back pain,2,no
+neck pain,2,no
+breathlessness,4,yes

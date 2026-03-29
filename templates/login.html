@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login - HygionX Health Assistant</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+
+.gradient-bg{
+background:
+radial-gradient(circle at 30% 20%, rgba(56,189,248,0.25), transparent 40%),
+radial-gradient(circle at 80% 80%, rgba(139,92,246,0.25), transparent 40%),
+linear-gradient(135deg,#0ea5e9 0%,#0d9488 50%,#0891b2 100%);
+}
+
+.fade-in{
+animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn{
+from{opacity:0; transform:translateY(10px);}
+to{opacity:1; transform:translateY(0);}
+}
+
+.card-shadow{
+box-shadow:0 30px 60px rgba(0,0,0,0.25);
+}
+
+</style>
+
+</head>
+
+<body class="bg-gray-50 min-h-screen flex flex-col" data-firebase-enabled="{% if firebase_config %}true{% else %}false{% endif %}">
+
+{% if firebase_config %}
+<script type="application/json" id="firebase-config">
+{{ firebase_config | tojson }}
+</script>
+{% endif %}
+
+<!-- NAVBAR -->
+<nav class="bg-white shadow-sm">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+<div class="flex justify-between h-16">
+
+<div class="flex items-center">
+<i class="fas fa-stethoscope text-sky-600 text-2xl mr-2"></i>
+<span class="text-xl font-bold text-gray-900">HygionX</span>
+</div>
+
+<div class="flex items-center space-x-4">
+
+<a href="/" class="text-gray-700 hover:text-sky-600 px-4 py-2 text-base font-semibold rounded-md hover:bg-gray-100 transition">
+Home
+</a>
+
+<a href="/register" class="bg-sky-600 text-white px-5 py-2 rounded-md text-sm hover:bg-sky-700 transition">
+Register
+</a>
+
+</div>
+
+</div>
+</div>
+</nav>
+
+
+<!-- LOGIN SECTION -->
+<section class="gradient-bg flex-grow flex items-center justify-center py-16 px-4">
+
+<div class="bg-white rounded-xl p-10 max-w-md w-full fade-in card-shadow border border-white/40">
+
+<div class="text-center mb-6">
+<i class="fas fa-user-circle text-sky-600 text-4xl mb-3"></i>
+
+<h2 class="text-3xl font-bold text-gray-900">
+Sign in to your account
+</h2>
+
+<p class="text-gray-500 text-sm">
+Access your HygionX Health Assistant
+</p>
+</div>
+
+
+<div id="errorBox" class="hidden bg-red-100 text-red-700 p-3 rounded mb-4 text-sm"></div>
+
+
+<form id="loginForm" class="space-y-5">
+
+<div>
+<label class="text-sm text-gray-600">Email address</label>
+
+<input
+id="email"
+name="email"
+type="email"
+required
+class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-sky-500 focus:outline-none"
+placeholder="Email address">
+</div>
+
+
+<div>
+<label class="text-sm text-gray-600">Password</label>
+
+<input
+id="password"
+name="password"
+type="password"
+required
+class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-sky-500 focus:outline-none"
+placeholder="Password">
+</div>
+
+
+<button
+type="submit"
+class="w-full flex justify-center py-3 px-4 text-base font-semibold rounded-md text-white bg-sky-600 hover:bg-sky-700 transition shadow-md">
+
+Sign In
+
+</button>
+
+</form>
+
+
+<div class="text-center mt-6 text-sm">
+<span class="text-gray-600">Don't have an account?</span>
+
+<a href="/register" class="text-sky-600 hover:underline">
+Sign up
+</a>
+</div>
+
+<div class="mt-4 text-center text-sm">
+<span class="text-gray-500">Need internal access?</span>
+<a href="/admin/login" class="font-semibold text-slate-700 hover:text-sky-600 hover:underline">
+Admin login
+</a>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- MINIMAL FOOTER -->
+<footer class="bg-gray-900 text-gray-400 py-6 text-sm">
+
+<div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between">
+
+<p>© 2026 HygionX. All rights reserved.</p>
+
+<div class="flex space-x-6 mt-3 md:mt-0">
+<a href="./privacy.html" class="hover:text-white transition">Privacy</a>
+<a href="./terms.html" class="hover:text-white transition">Terms</a>
+<a href="./help.html" class="hover:text-white transition">Help</a>
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+var firebaseEnabled = document.body.getAttribute('data-firebase-enabled') === 'true';
+</script>
+
+
+{% if firebase_config %}
+
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
+
+<script>
+
+var firebaseConfigElement = document.getElementById('firebase-config');
+
+if (firebaseConfigElement) {
+    var firebaseConfig = JSON.parse(firebaseConfigElement.textContent);
+    firebase.initializeApp(firebaseConfig);
+}
+
+</script>
+
+{% endif %}
+
+
+<script>
+
+const form = document.getElementById('loginForm');
+const errorBox = document.getElementById('errorBox');
+
+function showError(msg){
+errorBox.innerText = msg;
+errorBox.classList.remove("hidden");
+}
+
+form.addEventListener('submit', async (e)=>{
+
+e.preventDefault();
+
+const email = document.getElementById('email').value;
+const password = document.getElementById('password').value;
+
+if(firebaseEnabled){
+
+try{
+
+const cred = await firebase.auth().signInWithEmailAndPassword(email,password);
+const idToken = await cred.user.getIdToken();
+
+const response = await fetch('/api/login',{
+method:'POST',
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({idToken:idToken})
+});
+
+const data = await response.json();
+
+if(data.success){
+window.location.href = data.redirect || '/chat';
+}else{
+showError(data.message || "Login failed.");
+}
+
+}catch(err){
+
+if(err.code==="auth/user-not-found"){
+showError("No account with this email.");
+}
+else if(err.code==="auth/wrong-password"){
+showError("Wrong password.");
+}
+else{
+showError(err.message);
+}
+
+}
+
+}
+
+else{
+
+try{
+
+const response = await fetch('/api/login',{
+method:'POST',
+headers:{'Content-Type':'application/json'},
+body:JSON.stringify({email,password})
+});
+
+const data = await response.json();
+
+if(data.success){
+window.location.href = data.redirect || '/chat';
+}else{
+showError(data.message || "Login failed.");
+}
+
+}catch(error){
+
+showError("Login failed. Please try again.");
+
+}
+
+}
+
+});
+
+</script>
+
+</body>
+</html>

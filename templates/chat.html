@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HygionX - Health Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0d9488 50%, #0891b2 100%);
+        }
+        .sidebar-collapsed {
+            width: 4rem;
+        }
+        .sidebar-expanded {
+            width: 16rem;
+        }
+        .typing-dot {
+            animation: typing 1.4s infinite;
+        }
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+        .urgency-low { background-color: #10b981; }
+        .urgency-moderate { background-color: #f59e0b; }
+        .urgency-high { background-color: #ef4444; }
+        .message-fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Fixed Header */
+        .fixed-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 40;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Main content padding to account for fixed header */
+        .main-content {
+            padding-top: 80px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar-expanded {
+                width: 14rem;
+            }
+            .sidebar-collapsed {
+                width: 3rem;
+            }
+            .sidebar-text {
+                font-size: 0.875rem;
+            }
+            .ml-4 {
+                margin-left: 0.75rem;
+            }
+            .max-w-2xl {
+                max-width: 100%;
+            }
+            .p-6 {
+                padding: 1rem;
+            }
+            .px-6 {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            .text-2xl {
+                font-size: 1.5rem;
+            }
+            .h-10 {
+                height: 2.5rem;
+            }
+            .w-10 {
+                width: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .sidebar-expanded {
+                position: fixed;
+                left: 0;
+                top: 0;
+                height: 100vh;
+                z-index: 50;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                width: 14rem;
+            }
+            .sidebar-expanded.mobile-open {
+                transform: translateX(0);
+            }
+            .sidebar-collapsed {
+                width: 0;
+                overflow: hidden;
+            }
+            .sidebar-text {
+                display: none !important;
+            }
+            main {
+                margin-left: 0 !important;
+            }
+            .mobile-menu-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 40;
+                display: none;
+            }
+            .mobile-menu-overlay.active {
+                display: block;
+            }
+            .flex.items-center.justify-between {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            .bg-sky-600.px-4.py-2 {
+                padding: 0.5rem 0.75rem;
+                font-size: 0.875rem;
+            }
+        }
+        
+        /* Mobile-first adjustments */
+        @media (min-width: 641px) {
+            .mobile-menu-toggle {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .mobile-menu-toggle {
+                display: block;
+            }
+            .desktop-only {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 h-screen flex">
+    <!-- Mobile Menu Overlay -->
+    <div id="mobileMenuOverlay" class="mobile-menu-overlay"></div>
+    
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar-expanded bg-white shadow-lg transition-all duration-300 flex flex-col fixed left-0 top-0 h-full z-30">
+        <!-- Sidebar Header -->
+        <div class="p-4 border-b border-gray-200">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <i class="fas fa-stethoscope text-sky-600 text-xl mr-3"></i>
+                    <span class="sidebar-text font-bold text-gray-900">HygionX</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button id="sidebarToggle" class="text-gray-500 hover:text-gray-700 desktop-only">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <button id="mobileSidebarClose" class="text-gray-500 hover:text-gray-700 mobile-menu-toggle">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Menu -->
+        <nav class="flex-1 p-4 space-y-2">
+            <a href="#" class="flex items-center p-3 rounded-lg bg-sky-50 text-sky-600 hover:bg-sky-100 transition-colors">
+                <i class="fas fa-comments w-5"></i>
+                <span class="sidebar-text ml-3">Health Assistant</span>
+            </a>
+            <a href="/timeline" class="flex items-center p-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors">
+                <i class="fas fa-calendar-alt w-5"></i>
+                <span class="sidebar-text ml-3">Health Timeline</span>
+            </a>
+            <a href="/medical-encyclopedia" class="flex items-center p-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors">
+                <i class="fas fa-book-medical w-5"></i>
+                <span class="sidebar-text ml-3">Medical Encyclopedia</span>
+            </a>
+            <a href="/profile" class="flex items-center p-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors">
+                <i class="fas fa-user w-5"></i>
+                <span class="sidebar-text ml-3">Profile</span>
+            </a>
+            <a href="/settings" class="flex items-center p-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors">
+                <i class="fas fa-cog w-5"></i>
+                <span class="sidebar-text ml-3">Settings</span>
+            </a>
+        </nav>
+
+
+        <!-- Bottom Actions -->
+        <div class="p-4 border-t border-gray-200 space-y-2">
+            <a href="/help" class="flex items-center p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors">
+                <i class="fas fa-question-circle w-5"></i>
+                <span class="sidebar-text ml-3">Help</span>
+            </a>
+            <a href="/about" class="flex items-center p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors">
+                <i class="fas fa-info-circle w-5"></i>
+                <span class="sidebar-text ml-3">About</span>
+            </a>
+            <button id="logoutBtn" class="flex items-center p-2 rounded-lg text-red-600 hover:bg-red-50 transition-colors w-full">
+                <i class="fas fa-sign-out-alt w-5"></i>
+                <span class="sidebar-text ml-3">Logout</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col ml-64 main-content">
+        <!-- Top Navigation Bar -->
+        <header class="bg-white shadow-sm border-b border-gray-200 fixed-header">
+            <div class="px-6 py-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <!-- Mobile Menu Toggle -->
+                        <button id="mobileSidebarToggle" class="text-gray-500 hover:text-gray-700 mr-4 mobile-menu-toggle">
+                            <i class="fas fa-bars text-xl"></i>
+                        </button>
+                        <div>
+                            <h1 class="text-2xl font-bold text-gray-900">Health Assistant</h1>
+                            <p class="text-sm text-gray-600">AI-powered symptom analysis and medical guidance</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-2 sm:space-x-4">
+                        <!-- Dynamic Risk Indicator -->
+                        <div id="riskIndicator" class="flex items-center px-3 py-2 rounded-lg border transition-all duration-300">
+                            <div id="riskIcon" class="w-2 h-2 rounded-full mr-2 bg-gray-400"></div>
+                            <span id="riskText" class="text-sm font-medium">Assessment in progress...</span>
+                        </div>
+                        <button id="sessionSummaryToggle" class="border border-sky-200 text-sky-700 bg-sky-50 px-3 py-2 rounded-lg text-sm font-medium hover:bg-sky-100 transition-colors">
+                            <i class="fas fa-notes-medical mr-2"></i>
+                            Session Summary
+                        </button>
+                        <!-- User Profile -->
+                        <div class="flex items-center">
+                            <div class="h-8 w-8 rounded-full bg-sky-600 flex items-center justify-center">
+                                <span class="text-white text-sm font-medium">U</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+    <!-- Chat Container -->
+        <div class="flex-1 flex flex-col bg-white">
+            <!-- Messages Area -->
+            <div id="messagesContainer" class="flex-1 overflow-y-auto p-6 space-y-6">
+                <!-- Welcome Message -->
+                <div class="flex items-start message-fade-in">
+                    <div class="flex-shrink-0">
+                        <div class="h-10 w-10 rounded-full gradient-bg flex items-center justify-center">
+                            <i class="fas fa-robot text-white"></i>
+                        </div>
+                    </div>
+                    <div class="ml-4 max-w-2xl">
+                        <div class="bg-gray-50 rounded-lg p-4 border border-gray-200">
+                            <h3 class="font-semibold text-gray-900 mb-2">Welcome to HygionX</h3>
+                            <p class="text-gray-700 mb-4">I'm your AI health assistant. Please describe your symptoms and I'll help assess your condition and provide guidance.</p>
+                            
+                            <!-- Quick Symptom Suggestions -->
+                            <div class="mb-4">
+                                <p class="text-sm text-gray-600 mb-2">Common symptoms you can describe:</p>
+                                <div class="flex flex-wrap gap-2">
+                                    <button class="symptom-btn bg-sky-100 text-sky-700 px-3 py-1 rounded-full text-sm hover:bg-sky-200 transition-colors">Fever</button>
+                                    <button class="symptom-btn bg-sky-100 text-sky-700 px-3 py-1 rounded-full text-sm hover:bg-sky-200 transition-colors">Headache</button>
+                                    <button class="symptom-btn bg-sky-100 text-sky-700 px-3 py-1 rounded-full text-sm hover:bg-sky-200 transition-colors">Cough</button>
+                                    <button class="symptom-btn bg-sky-100 text-sky-700 px-3 py-1 rounded-full text-sm hover:bg-sky-200 transition-colors">Chest Pain</button>
+                                    <button class="symptom-btn bg-sky-100 text-sky-700 px-3 py-1 rounded-full text-sm hover:bg-sky-200 transition-colors">Stomach Pain</button>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-amber-50 border border-amber-200 rounded p-3">
+                                <p class="text-xs text-amber-800">
+                                    <i class="fas fa-info-circle mr-1"></i>
+                                    This system provides guidance and is not a substitute for professional medical diagnosis.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-500 mt-1">AI Assistant • Just now</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="border-t border-gray-200 p-4 bg-gray-50 sticky bottom-0">
+                <form id="messageForm" class="w-full max-w-4xl mx-auto">
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <input type="text" 
+                               id="messageInput" 
+                               placeholder="Describe your symptoms in detail..." 
+                               class="flex-1 rounded-lg border border-gray-300 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent text-base"
+                               required>
+                        <button type="submit" 
+                                class="bg-sky-600 text-white px-6 py-3 rounded-lg hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 transition-colors flex items-center justify-center min-w-[100px]">
+                            <i class="fas fa-paper-plane mr-2"></i>
+                            <span>Send</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <div id="sessionSummaryPanel" class="hidden fixed inset-0 z-50">
+        <div id="sessionSummaryBackdrop" class="absolute inset-0 bg-black/40"></div>
+        <div class="absolute right-4 top-24 w-[92%] max-w-md bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden">
+            <div class="flex items-center justify-between px-4 py-3 border-b border-gray-200 bg-sky-50">
+                <div>
+                    <h3 class="text-sm font-semibold text-gray-900">Session Summary</h3>
+                    <p class="text-xs text-gray-600">Generated from the current conversation</p>
+                </div>
+                <button id="sessionSummaryClose" class="text-gray-400 hover:text-gray-700 p-2">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-4">
+                <p id="sessionSummaryText" class="text-sm text-gray-700 leading-6 whitespace-pre-line">
+                    Summary will appear here as the conversation develops.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let sessionId = Date.now().toString();
+        let isSidebarExpanded = true;
+        let latestSessionSummary = 'Summary will appear here as the conversation develops.';
+
+        // ── Conversation memory ───────────────────────────────────────────
+        let previousSymptoms = [];
+        let followupCount = 0;
+        const MAX_FOLLOWUPS = 3;
+
+        function mergeSymptoms(newSymptoms) {
+            const existing = new Set(previousSymptoms.map(s => s.toLowerCase().trim()));
+            (newSymptoms || []).forEach(s => {
+                const key = (s || '').toLowerCase().trim();
+                if (key && !existing.has(key)) {
+                    previousSymptoms.push(s);
+                    existing.add(key);
+                }
+            });
+        }
+
+        function removeFollowupOptions() {
+            const old = document.querySelector('.followup-options-row');
+            if (old) old.remove();
+        }
+        // ─────────────────────────────────────────────────────────────────
+
+        // Sidebar Toggle
+        document.getElementById('sidebarToggle').addEventListener('click', () => {
+            const sidebar = document.getElementById('sidebar');
+            const sidebarTexts = document.querySelectorAll('.sidebar-text');
+            
+            isSidebarExpanded = !isSidebarExpanded;
+            
+            if (isSidebarExpanded) {
+                sidebar.classList.remove('sidebar-collapsed');
+                sidebar.classList.add('sidebar-expanded');
+                setTimeout(() => {
+                    sidebarTexts.forEach(text => text.style.display = 'block');
+                }, 150);
+            } else {
+                sidebar.classList.remove('sidebar-expanded');
+                sidebar.classList.add('sidebar-collapsed');
+                sidebarTexts.forEach(text => text.style.display = 'none');
+            }
+        });
+
+        // Mobile Menu Toggle
+        document.getElementById('mobileSidebarToggle').addEventListener('click', () => {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobileMenuOverlay');
+            
+            sidebar.classList.add('mobile-open');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        // Mobile Menu Close
+        document.getElementById('mobileSidebarClose').addEventListener('click', () => {
+            closeMobileSidebar();
+        });
+
+        // Mobile Menu Overlay Click
+        document.getElementById('mobileMenuOverlay').addEventListener('click', () => {
+            closeMobileSidebar();
+        });
+
+        function closeMobileSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('mobileMenuOverlay');
+            
+            sidebar.classList.remove('mobile-open');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('sessionSummaryToggle').addEventListener('click', () => {
+            document.getElementById('sessionSummaryPanel').classList.remove('hidden');
+        });
+
+        document.getElementById('sessionSummaryClose').addEventListener('click', () => {
+            document.getElementById('sessionSummaryPanel').classList.add('hidden');
+        });
+
+        document.getElementById('sessionSummaryBackdrop').addEventListener('click', () => {
+            document.getElementById('sessionSummaryPanel').classList.add('hidden');
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 640) {
+                closeMobileSidebar();
+            }
+        });
+
+        // Symptom button clicks
+        document.querySelectorAll('.symptom-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.getElementById('messageInput').value = btn.textContent;
+            });
+        });
+
+        // Message form submission
+        document.getElementById('messageForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            removeFollowupOptions();
+            addUserMessage(message);
+            input.value = '';
+            showTypingIndicator();
+
+            try {
+                const response = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message,
+                        session_id: sessionId,
+                        previous_symptoms: previousSymptoms,
+                        followup_count: followupCount,
+                        force_triage: followupCount >= MAX_FOLLOWUPS
+                    })
+                });
+
+                // Check HTTP status
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log("Chat response:", data);
+                
+                removeTypingIndicator();
+                if (data.session_id) {
+                    sessionId = data.session_id;
+                }
+                updateSessionSummary(data.session_summary);
+
+                // Save symptoms from every response
+                if (data.symptoms && Array.isArray(data.symptoms)) {
+                    mergeSymptoms(data.symptoms);
+                }
+
+                // Track followup count
+                if (data.type === 'followup' || data.response_type === 'question') {
+                    followupCount++;
+                } else {
+                    followupCount = 0; // reset on triage/emergency
+                }
+                
+                if (data && (data.response_type || data.type)) {
+                    addStructuredAIResponse(data);
+                } else {
+                    addErrorMessage('Unexpected response format. Please try again.');
+                }
+                
+            } catch (error) {
+                console.error("Chat error:", error);
+                removeTypingIndicator();
+                addErrorMessage('Sorry, I encountered an error. Please try again.');
+            }
+        });
+
+        function addUserMessage(text) {
+            const container = document.getElementById('messagesContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'flex items-start justify-end message-fade-in';
+            messageDiv.innerHTML = `
+                <div class="mr-4 max-w-2xl">
+                    <div class="bg-sky-600 text-white rounded-lg p-4">
+                        <p class="text-white">${escapeHtml(text)}</p>
+                    </div>
+                    <div class="text-xs text-gray-500 mt-1 text-right">You • Just now</div>
+                </div>
+                <div class="flex-shrink-0">
+                    <div class="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center">
+                        <i class="fas fa-user text-gray-600"></i>
+                    </div>
+                </div>
+            `;
+            
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function addStructuredAIResponse(data) {
+            const container = document.getElementById('messagesContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'flex items-start message-fade-in';
+            
+            // Update risk indicator
+            updateRiskIndicator(data.urgency || 'low');
+            
+            // Detect response type (support both response_type and type fields)
+            const responseType = data.response_type || data.type || 'final';
+            console.log("Response type:", responseType, "Data:", data);
+            
+            // Handle follow-up question responses
+            if (responseType === 'question' || responseType === 'followup') {
+                const question = data.question || data.response || '';
+                
+                messageDiv.innerHTML = `
+                    <div class="flex-shrink-0">
+                        <div class="h-10 w-10 rounded-full gradient-bg flex items-center justify-center">
+                            <i class="fas fa-robot text-white"></i>
+                        </div>
+                    </div>
+                    <div class="ml-4 max-w-2xl relative">
+                        <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-4">
+                            <!-- Question Header with Explainability Menu -->
+                            <div class="flex items-center justify-between mb-3">
+                                <h3 class="font-semibold text-gray-900">Follow-up Question</h3>
+                                <div class="relative">
+                                    <button
+                                        class="explainability-btn text-gray-400 hover:text-gray-600 p-2"
+                                        onclick="toggleExplainabilityMenu(this)"
+                                        data-confidence="${(data.hidden_metadata && data.hidden_metadata.confidence_score) || (Math.round((data.confidence || 0.5) * 100) + '%')}"
+                                        data-confidence-detail="${escapeHtml((data.hidden_metadata && data.hidden_metadata.confidence_explanation) || '')}"
+                                        data-reasoning="${escapeHtml((data.hidden_metadata && data.hidden_metadata.model_reasoning) || (data.model_details && data.model_details.model_reasoning) || '')}"
+                                        data-models='${JSON.stringify((data.hidden_metadata && data.hidden_metadata.models_used) || (data.model_details && data.model_details.models_used) || [])}'
+                                    >
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                    <!-- Explainability Dropdown Menu -->
+                                    <div class="explainability-dropdown hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                                        <button class="explainability-option w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center" onclick="showExplainabilityDetail(this, 'confidence')">
+                                            <i class="fas fa-chart-line mr-2"></i>
+                                            Confidence Score
+                                        </button>
+                                        <button class="explainability-option w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center" onclick="showExplainabilityDetail(this, 'reasoning')">
+                                            <i class="fas fa-question-circle mr-2"></i>
+                                            Model Reasoning
+                                        </button>
+                                        <button class="explainability-option w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center" onclick="showExplainabilityDetail(this, 'models')">
+                                            <i class="fas fa-microchip mr-2"></i>
+                                            Models Used
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <p class="text-gray-700 text-lg">${escapeHtml(question)}</p>
+                            </div>
+                            
+                            <div class="bg-amber-50 border border-amber-200 p-3">
+                                <p class="text-xs text-amber-800">
+                                    <i class="fas fa-info-circle mr-1"></i>
+                                    Type your answer in the message box below to continue.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Explainability Panel (Hidden by default) -->
+                        <div class="explainability-panel hidden bg-white rounded-lg border border-gray-200 shadow-sm mt-2 p-4">
+                            <h4 class="text-sm font-semibold text-gray-700 mb-3">Why this question?</h4>
+                            <div class="space-y-3">
+                                <!-- Confidence Score -->
+                                <div>
+                                    <h5 class="text-sm font-medium text-gray-700">Confidence Score</h5>
+                                    <div class="flex items-center mt-1">
+                                        <div class="flex-1 bg-gray-200 rounded-full h-2 mr-2">
+                                            <div class="bg-sky-600 h-2 rounded-full" style="width: ${(data.confidence || 0.5) * 100}%"></div>
+                                        </div>
+                                        <span class="text-sm font-medium">${Math.round((data.confidence || 0.5) * 100)}%</span>
+                                    </div>
+                                </div>
+                                
+                                <!-- Reasoning -->
+                                <div>
+                                    <h5 class="text-sm font-medium text-gray-700">Reasoning</h5>
+                                    <p class="text-sm text-gray-600 mt-1">${escapeHtml((data.hidden_metadata && data.hidden_metadata.model_reasoning) || 'This question helps narrow down the safest next step for your symptoms.')}</p>
+                                </div>
+                                
+                                <!-- Current Assessment -->
+                                <div>
+                                    <h5 class="text-sm font-medium text-gray-700">Current Assessment</h5>
+                                    <p class="text-sm text-gray-600 mt-1">${escapeHtml(data.session_summary || 'Based on your symptoms, I am gathering more information to determine the appropriate level of care.')}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-xs text-gray-500 mt-1">AI Assistant • Just now</div>
+                    </div>
+                `;
+            } 
+            // Handle final assessment responses
+            else if (responseType === 'final') {
+                const assessment = data.assessment || data.response || '';
+                const urgencyLevel = data.urgency_level || 'Low Risk';
+                const recommendedAction = data.recommended_action || '';
+                const possibleConditions = normalizePossibleConditions(data.possible_conditions || data.possible_diseases || []);
+                const confidence = Math.round((data.confidence || 0.5) * 100);
+                
+                const urgencyClass = urgencyLevel.toLowerCase().includes('emergency') ? 'bg-red-500' : 
+                                  urgencyLevel.toLowerCase().includes('high') ? 'bg-orange-500' : 
+                                  urgencyLevel.toLowerCase().includes('moderate') ? 'bg-yellow-500' : 'bg-green-500';
+                
+                messageDiv.innerHTML = `
+                    <div class="flex-shrink-0">
+                        <div class="h-10 w-10 rounded-full gradient-bg flex items-center justify-center">
+                            <i class="fas fa-robot text-white"></i>
+                        </div>
+                    </div>
+                    <div class="ml-4 max-w-2xl relative">
+                        <div class="bg-white rounded-lg border border-gray-200 shadow-sm">
+                            <!-- Response Header -->
+                            <div class="p-4 border-b border-gray-200">
+                                <div class="flex items-center justify-between mb-3">
+                                    <h3 class="font-semibold text-gray-900">AI Assessment</h3>
+                                <div class="relative">
+                                    <button
+                                        class="explainability-btn text-gray-400 hover:text-gray-600 p-2"
+                                        onclick="toggleExplainabilityMenu(this)"
+                                        data-confidence="${(data.hidden_metadata && data.hidden_metadata.confidence_score) || (Math.round((data.confidence || 0.5) * 100) + '%')}"
+                                        data-confidence-detail="${escapeHtml((data.hidden_metadata && data.hidden_metadata.confidence_explanation) || '')}"
+                                        data-reasoning="${escapeHtml((data.hidden_metadata && data.hidden_metadata.model_reasoning) || (data.model_details && data.model_details.model_reasoning) || '')}"
+                                        data-models='${JSON.stringify((data.hidden_metadata && data.hidden_metadata.models_used) || (data.model_details && data.model_details.models_used) || [])}'
+                                    >
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </button>
+                                        <!-- Explainability Dropdown Menu -->
+                                        <div class="explainability-dropdown hidden absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                                            <button class="explainability-option w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center" onclick="showExplainabilityDetail(this, 'confidence')">
+                                                <i class="fas fa-chart-line mr-2"></i>
+                                                Confidence Score
+                                            </button>
+                                            <button class="explainability-option w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center" onclick="showExplainabilityDetail(this, 'reasoning')">
+                                                <i class="fas fa-question-circle mr-2"></i>
+                                                Model Reasoning
+                                            </button>
+                                            <button class="explainability-option w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center" onclick="showExplainabilityDetail(this, 'models')">
+                                                <i class="fas fa-microchip mr-2"></i>
+                                                Models Used
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Assessment Section -->
+                                <div class="mb-4">
+                                    <h4 class="text-sm font-semibold text-gray-700 mb-2">Assessment</h4>
+                                    <div class="text-gray-700 whitespace-pre-line">${escapeHtml(assessment)}</div>
+                                </div>
+                                
+                                <!-- Urgency Level -->
+                                <div class="mb-4">
+                                    <h4 class="text-sm font-semibold text-gray-700 mb-2">Urgency Level</h4>
+                                    <div class="flex items-center">
+                                        <div class="${urgencyClass} text-white px-3 py-1 rounded-full text-sm font-medium">
+                                            ${urgencyLevel}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Recommended Action -->
+                                <div class="mb-4">
+                                    <h4 class="text-sm font-semibold text-gray-700 mb-2">Recommended Action</h4>
+                                    <div class="text-gray-700 whitespace-pre-line">${escapeHtml(recommendedAction)}</div>
+                                </div>
+                                
+                                <!-- Possible Conditions -->
+                                ${possibleConditions.length > 0 ? `
+                                <div class="mb-4">
+                                    <h4 class="text-sm font-semibold text-gray-700 mb-2">Possible Conditions</h4>
+                                    <div class="space-y-2">
+                                        ${possibleConditions.map(condition => `
+                                            <div class="flex items-center justify-between text-sm">
+                                                <span class="text-gray-600">${escapeHtml(condition.condition)}</span>
+                                                <span class="text-gray-500">${condition.probability}%</span>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                                ` : ''}
+                            </div>
+                            
+                            <!-- Explainability Panel (Hidden by default) -->
+                            <div class="explainability-panel hidden border-t border-gray-200 p-4 bg-gray-50">
+                                <h4 class="text-sm font-semibold text-gray-700 mb-3">Why this assessment?</h4>
+                                
+                                <!-- Confidence Score -->
+                                <div class="mb-4">
+                                    <div class="flex items-center justify-between mb-1">
+                                        <span class="text-sm text-gray-600">Confidence Score</span>
+                                        <span class="text-sm font-medium">${confidence}%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-sky-600 h-2 rounded-full" style="width: ${confidence}%"></div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Model Reasoning -->
+                                <div class="mb-4">
+                                    <h5 class="text-sm font-medium text-gray-700 mb-2">Model Reasoning</h5>
+                                    <p class="text-sm text-gray-600">${escapeHtml(data.model_details?.model_reasoning || 'This assessment is based on symptoms you described and their correlation with known medical patterns.')}</p>
+                                </div>
+                                
+                                <!-- Models Used -->
+                                <div class="mb-4">
+                                    <h5 class="text-sm font-medium text-gray-700 mb-2">Models Used</h5>
+                                    <div class="space-y-1">
+                                        ${(data.model_details?.models_used || ['BioClinicalBERT', 'MiniLM', 'Risk Scoring Engine']).map(model => `
+                                            <div class="flex items-center text-sm text-gray-600">
+                                                <div class="w-2 h-2 bg-green-500 rounded-full mr-2"></div>
+                                                ${model}
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                                
+                                <!-- Full Probabilities -->
+                                ${(data.model_details?.full_probabilities && data.model_details.full_probabilities.length > 0) || possibleConditions.length > 0 ? `
+                                <div class="mb-4">
+                                    <h5 class="text-sm font-medium text-gray-700 mb-2">Full Prediction Probabilities</h5>
+                                    <div class="space-y-1">
+                                        ${(data.model_details?.full_probabilities || possibleConditions).map(pred => `
+                                            <div class="flex items-center justify-between text-sm">
+                                                <span class="text-gray-600">${escapeHtml(pred.condition)}</span>
+                                                <span class="text-gray-500">${pred.probability}%</span>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                                ` : ''}
+                            </div>
+                            
+                            <!-- Safety Disclaimer -->
+                            <div class="bg-amber-50 border-t border-amber-200 p-3">
+                                <p class="text-xs text-amber-800">
+                                    <i class="fas fa-info-circle mr-1"></i>
+                                    ${escapeHtml(data.safety_message || 'This AI provides guidance only and is not a substitute for professional medical diagnosis.')}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="text-xs text-gray-500 mt-1">AI Assistant • Just now</div>
+                    </div>
+                `;
+            } 
+            // Handle unknown response types
+            else {
+                console.error("Unknown response type:", responseType, data);
+                addErrorMessage('Unexpected response format. Please try again.');
+                return;
+            }
+            
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function updateRiskIndicator(urgency) {
+            const riskIndicator = document.getElementById('riskIndicator');
+            const riskIcon = document.getElementById('riskIcon');
+            const riskText = document.getElementById('riskText');
+            
+            // Remove existing classes
+            riskIndicator.className = 'flex items-center px-3 py-2 rounded-lg border transition-all duration-300';
+            riskIcon.className = 'w-2 h-2 rounded-full mr-2';
+            
+            switch(urgency.toLowerCase()) {
+                case 'emergency':
+                    riskIndicator.classList.add('bg-red-100', 'border-red-300');
+                    riskIcon.classList.add('bg-red-600');
+                    riskText.textContent = 'Emergency';
+                    riskText.className = 'text-sm font-medium text-red-800';
+                    break;
+                case 'high':
+                    riskIndicator.classList.add('bg-red-50', 'border-red-200');
+                    riskIcon.classList.add('bg-red-500');
+                    riskText.textContent = '🔴 High Risk';
+                    riskText.className = 'text-sm font-medium text-red-700';
+                    break;
+                case 'moderate':
+                    riskIndicator.classList.add('bg-orange-50', 'border-orange-200');
+                    riskIcon.classList.add('bg-orange-500');
+                    riskText.textContent = '🟠 Moderate Risk';
+                    riskText.className = 'text-sm font-medium text-orange-700';
+                    break;
+                case 'low':
+                    riskIndicator.classList.add('bg-green-50', 'border-green-200');
+                    riskIcon.classList.add('bg-green-500');
+                    riskText.textContent = '🟢 Low Risk';
+                    riskText.className = 'text-sm font-medium text-green-700';
+                    break;
+                default:
+                    riskIndicator.classList.add('bg-gray-50', 'border-gray-200');
+                    riskIcon.classList.add('bg-gray-400');
+                    riskText.textContent = 'Assessment in progress...';
+                    riskText.className = 'text-sm font-medium text-gray-600';
+            }
+        }
+        
+        function selectAnswerChoice(choice) {
+            document.getElementById('messageInput').value = choice;
+            document.getElementById('messageForm').dispatchEvent(new Event('submit'));
+        }
+        
+        function enableTextInput() {
+            document.getElementById('messageInput').focus();
+        }
+        
+        function toggleExplainabilityMenu(button) {
+            // Close all other dropdowns
+            document.querySelectorAll('.explainability-dropdown').forEach(dropdown => {
+                if (dropdown !== button.nextElementSibling) {
+                    dropdown.classList.add('hidden');
+                }
+            });
+            
+            // Toggle current dropdown
+            const dropdown = button.nextElementSibling;
+            dropdown.classList.toggle('hidden');
+        }
+        
+        function showExplainabilityDetail(button, detailType) {
+            // Find associated explainability button with data-* attributes
+            const container = button.closest('.relative, .ml-4');
+            const triggerBtn = container.querySelector('.explainability-btn');
+            if (!triggerBtn) return;
+
+            const confidence = triggerBtn.dataset.confidence || '';
+            const confidenceDetail = triggerBtn.dataset.confidenceDetail || '';
+            const reasoning = triggerBtn.dataset.reasoning || 'No additional reasoning available.';
+            let models = [];
+            try {
+                models = JSON.parse(triggerBtn.dataset.models || '[]');
+            } catch (e) {
+                models = [];
+            }
+
+            let title = '';
+            let content = '';
+            if (detailType === 'confidence') {
+                title = 'Confidence Score';
+                content = confidenceDetail ? `${confidence}\n\n${confidenceDetail}` : (confidence || 'Not available');
+            } else if (detailType === 'reasoning') {
+                title = 'Model Reasoning';
+                content = reasoning || 'No additional reasoning available.';
+            } else if (detailType === 'models') {
+                title = 'Models Used';
+                content = (models && models.length > 0) ? models.join('\n') : 'No model details available.';
+            }
+
+            // Create or reuse a small gray overlay box beside the chat (top-right)
+            let overlay = document.getElementById('explainabilityOverlay');
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = 'explainabilityOverlay';
+                overlay.className = 'fixed top-24 right-4 z-50';
+                document.body.appendChild(overlay);
+            }
+
+            overlay.innerHTML = `
+                <div class="inline-flex items-start max-w-md bg-gray-800 text-white text-sm rounded-lg shadow-lg px-4 py-3 space-x-3">
+                    <div class="flex-1">
+                        <div class="font-semibold mb-1">${escapeHtml(title)}</div>
+                        <div class="whitespace-pre-wrap">${escapeHtml(content)}</div>
+                    </div>
+                    <button id="explainabilityOverlayClose" class="text-gray-300 hover:text-white ml-2">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+
+            overlay.classList.remove('hidden');
+
+            const closeBtn = document.getElementById('explainabilityOverlayClose');
+            if (closeBtn) {
+                closeBtn.onclick = () => {
+                    overlay.classList.add('hidden');
+                };
+            }
+
+            // Close dropdown menu after selection
+            const dropdown = button.closest('.explainability-dropdown');
+            if (dropdown) {
+                dropdown.classList.add('hidden');
+            }
+        }
+        
+        function toggleExplainability(button) {
+            const messageContainer = button.closest('.relative, .ml-4');
+            const panel = messageContainer.querySelector('.explainability-panel');
+            
+            if (panel) {
+                panel.classList.toggle('hidden');
+            }
+        }
+        
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.explainability-btn') && !event.target.closest('.explainability-dropdown')) {
+                document.querySelectorAll('.explainability-dropdown').forEach(dropdown => {
+                    dropdown.classList.add('hidden');
+                });
+            }
+        });
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function normalizePossibleConditions(conditions) {
+            if (!Array.isArray(conditions)) return [];
+
+            return conditions.map((item) => {
+                if (typeof item === 'string') {
+                    return { condition: item, probability: 0 };
+                }
+
+                return {
+                    condition: item?.condition || 'Unspecified condition',
+                    probability: Number.isFinite(Number(String(item?.probability ?? '').replace('%', '').trim()))
+                        ? Math.round(Number(String(item.probability).replace('%', '').trim()))
+                        : 0
+                };
+            }).filter(item => item.condition);
+        }
+
+        function updateSessionSummary(summary) {
+            if (!summary) return;
+
+            latestSessionSummary = summary;
+            const summaryText = document.getElementById('sessionSummaryText');
+            if (summaryText) {
+                summaryText.textContent = summary;
+            }
+        }
+        
+        function showTypingIndicator() {
+            const container = document.getElementById('messagesContainer');
+            const typingDiv = document.createElement('div');
+            typingDiv.id = 'typingIndicator';
+            typingDiv.className = 'flex items-start message-fade-in';
+            typingDiv.innerHTML = `
+                <div class="flex-shrink-0">
+                    <div class="h-10 w-10 rounded-full gradient-bg flex items-center justify-center">
+                        <i class="fas fa-robot text-white"></i>
+                    </div>
+                </div>
+                <div class="ml-4">
+                    <div class="bg-white rounded-lg border border-gray-200 shadow-sm p-4">
+                        <div class="flex space-x-1">
+                            <div class="typing-dot w-2 h-2 bg-gray-400 rounded-full"></div>
+                            <div class="typing-dot w-2 h-2 bg-gray-400 rounded-full"></div>
+                            <div class="typing-dot w-2 h-2 bg-gray-400 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(typingDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function removeTypingIndicator() {
+            const indicator = document.getElementById('typingIndicator');
+            if (indicator) {
+                indicator.remove();
+            }
+        }
+
+        function addErrorMessage(text) {
+            const container = document.getElementById('messagesContainer');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'flex items-start message-fade-in';
+            messageDiv.innerHTML = `
+                <div class="flex-shrink-0">
+                    <div class="h-10 w-10 rounded-full bg-red-600 flex items-center justify-center">
+                        <i class="fas fa-exclamation-triangle text-white"></i>
+                    </div>
+                </div>
+                <div class="ml-4 max-w-2xl">
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-4">
+                        <p class="text-red-800">${escapeHtml(text)}</p>
+                    </div>
+                    <div class="text-xs text-gray-500 mt-1">System • Just now</div>
+                </div>
+            `;
+            
+            container.appendChild(messageDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // Click outside to close dropdowns
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.explainability-btn') && !e.target.closest('.explainability-dropdown')) {
+                document.querySelectorAll('.explainability-dropdown').forEach(d => {
+                    d.classList.add('hidden');
+                });
+            }
+        });
+        
+        // Follow-up question clicks
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('followup-btn')) {
+                document.getElementById('messageInput').value = e.target.textContent;
+            }
+        });
+
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            try {
+                await fetch('/api/logout', { method: 'POST' });
+                window.location.href = '/';
+            } catch (error) {
+                window.location.href = '/';
+            }
+        });
+
+        // Emergency functionality - redirect to emergency info
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('#emergencyBtn')) {
+                alert('For emergencies, please call 911 or go to the nearest emergency department immediately.');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Timeline - HygionX</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-stethoscope text-sky-600 text-2xl mr-2"></i>
+                        <span class="text-xl font-bold text-gray-900">HygionX</span>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="/" class="text-gray-700 hover:text-sky-600 px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                    <a href="/chat" class="bg-sky-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-sky-700">
+                        <i class="fas fa-comments mr-1"></i> Chat
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <header class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Health Timeline</h1>
+            <p class="text-gray-600">
+                Review your past AI triage assessments and revisit conversations for additional context.
+            </p>
+        </header>
+
+        {% if items %}
+        <div class="space-y-6">
+            {% for item in items %}
+            <div class="bg-white shadow rounded-lg p-5 border border-gray-100">
+                <div class="flex items-start justify-between mb-2">
+                    <div>
+                        <p class="text-sm text-gray-500">
+                            {{ item.created_at.strftime('%B %d, %Y %I:%M %p') }}
+                        </p>
+                        <p class="text-sm text-gray-600 mt-1">
+                            <span class="font-semibold">Symptoms:</span>
+                            {% if item.symptoms and item.symptoms|length > 0 %}
+                                {{ item.symptoms|join(', ') }}
+                            {% else %}
+                                Not recorded
+                            {% endif %}
+                        </p>
+                    </div>
+                    <div class="text-right">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold
+                            {% if item.risk_level == 'High' %} bg-red-100 text-red-700
+                            {% elif item.risk_level == 'Moderate' %} bg-yellow-100 text-yellow-700
+                            {% else %} bg-emerald-100 text-emerald-700 {% endif %}">
+                            {{ item.risk_level or 'Unknown' }}
+                        </span>
+                        <p class="text-xs text-gray-500 mt-1">
+                            Severity: {{ item.severity_score if item.severity_score is not none else 'N/A' }}
+                        </p>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-700 mb-3">
+                    <span class="font-semibold">Recommended action:</span>
+                    {{ item.recommended_action or 'Not recorded' }}
+                </p>
+                <div class="flex items-center justify-between">
+                    <p class="text-xs text-gray-500">
+                        Confidence: {{ '%.0f' % (item.confidence * 100) if item.confidence is not none else 'N/A' }}%
+                    </p>
+                    <a href="/chat?session_id={{ item.session_id }}" class="inline-flex items-center text-sm text-sky-600 hover:text-sky-800">
+                        <i class="fas fa-history mr-1"></i>
+                        View Conversation
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="bg-white shadow rounded-lg p-6 border border-dashed border-gray-200 text-center">
+            <i class="fas fa-notes-medical text-3xl text-gray-300 mb-3"></i>
+            <p class="text-gray-700 font-medium mb-1">No assessments yet</p>
+            <p class="text-gray-500 text-sm mb-4">
+                Once you complete an AI triage assessment, it will appear here in your health timeline.
+            </p>
+            <a href="/chat" class="inline-flex items-center px-4 py-2 bg-sky-600 text-white text-sm font-medium rounded-md hover:bg-sky-700">
+                <i class="fas fa-play mr-2"></i> Start your first assessment
+            </a>
+        </div>
+        {% endif %}
+    </main>
+</body>
+</html>
+

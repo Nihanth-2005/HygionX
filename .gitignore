@@ -1,0 +1,40 @@
+# Environment and secrets
+.env
+*.env
+
+# Python cache and build artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# IDE and OS files
+.vscode/
+.idea/
+desktop.ini
+Thumbs.db
+.DS_Store
+
+# Local databases and logs
+*.db
+*.sqlite3
+*.log
+
+# Model and runtime artifacts
+*.joblib
+*.tmp
+
+firebase-service-account.json
