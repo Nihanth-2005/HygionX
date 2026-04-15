@@ -1,0 +1,26 @@
+1. I have been suffering from headache since 3 days
+	Follow up Q1: no
+	Follow up Q2: no
+	Follow up Q3: no
+	o/p : Low Risk (2/10)
+
+	also have severe chest pain -> Emergency (10/10)
+
+2. I have sore throat and runny nose for 2 days. 
+	o/p : Moderate
+
+3. I have dizziness and weakness for 2 days and I am not feeling well.
+	o/p: Moderate
+
+4. I have high temperature and body chills.
+	Follow up Q1: no
+	Follow up Q2: no
+	Follow up Q3: no
+	o/p: Low Risk (2/10)
+
+5. I have head pain and spinning sensation.
+	Follow up Q x: answer : nausea is there.
+	o/p: Moderate
+
+6. I have severe chest pain and breathlessness now.
+	o/p: Emergency ( No follow up questions )
