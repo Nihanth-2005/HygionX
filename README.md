@@ -1,3 +1,7 @@
+
+
+https://github.com/user-attachments/assets/530ec0d4-b921-4d89-8309-48eac5369736
+
 # HygionX
 
 HygionX is a Flask-based AI medical triage assistant with user authentication, symptom analysis, follow-up questioning, session history, and an admin analytics dashboard.
